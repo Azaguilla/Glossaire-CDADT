@@ -7,7 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import {HttpClientModule} from '@angular/common/http';
 import {WordService} from '../services/word.service';
-import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { SingleWordComponent } from './word/single-word/single-word.component';
 
 
 @NgModule({
@@ -15,13 +15,13 @@ import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
     AppComponent,
     HomeComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    SingleWordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    SlimLoadingBarModule,
+    HttpClientModule
   ],
   providers: [
     WordService
