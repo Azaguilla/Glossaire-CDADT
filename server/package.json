@@ -8,7 +8,7 @@
   "keywords": [],
   "author": "Laurie Martin",
   "license": "ISC",
-  "description": "Application de liste de courses",
+  "description": "Application Glossaire",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",

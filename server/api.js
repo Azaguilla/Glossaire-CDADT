@@ -5,26 +5,30 @@ const express = require("express"),
   mongoose = require("mongoose"),
   config = require("./bin/db");
 
+/* On se connecte à la Base de données*/
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DB, { useNewUrlParser: true }).then(
+mongoose.connect(config.DB, {useNewUrlParser: true}).then(
   () => {
     console.log("Connexion à la Base de données effectuée");
 
-    // Routes required
-    //const listRoute = require('./routes/list');
+    // Une fois connecté, on spécifie les routes
+    const wordRoute = require("./routes/word");
 
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
 
-    //app.use('/list', listRoute);
+    //On indique l'url et la route
+    app.use("/word", wordRoute);
 
     const port = process.env.PORT || 4000;
 
-    const server = app.listen(port, function() {
+    const server = app.listen(port, function () {
       console.log("En écoute sur le port " + port);
     });
 
   },
-  err => { console.log("Impossible de se connecter à la Base de données :" + err); },
+  err => {
+    console.log("Impossible de se connecter à la Base de données :" + err);
+  },
 );
