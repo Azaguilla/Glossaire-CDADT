@@ -1,0 +1,42 @@
+<section id="home">
+
+  <!-- Header avec logo -->
+  <header class="home-header">
+      <img src="assets/img/logo_v4.png">
+      <p>Bienvenue sur l'application Glossaire</p>
+  </header>
+  <!-- Header avec logo -->
+
+  <!-- Zone de recherche -->
+  <form class="home-search-area">
+    <input type="search" name="search" placeholder="Rechercher un mot, un thème...">
+  </form>
+  <!-- Zone de recherche -->
+
+  <!-- Dernières défintions ajoutées -->
+  <section class="home-last-definition">
+    <header>
+      <h1>Dernière définition</h1>
+    </header>
+    <section class="home-last-definition-content" *ngIf="word">
+      <h1>{{ word.title }}</h1>
+      <p class="description">
+        {{ word.definition }}
+      </p>
+      <div class="button-action">
+        <a href="#">Consulter</a>
+        <a href="#">Action</a>
+      </div>
+    </section>
+    <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
+  </section>
+  <!-- Dernières défintions ajoutées -->
+
+  <!-- Connexion -->
+  <div class="home-connection">
+    <a class="btn">Se connecter</a>
+  </div>
+  <!-- Connexion -->
+</section>
+
+
