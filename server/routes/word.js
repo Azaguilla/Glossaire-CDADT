@@ -17,5 +17,17 @@ wordRoutes.route("/").get(function(req, res) {
   });
 });
 
+// Defined edit route
+wordRoutes.route("/:title").get(function(req, res) {
+  let title = req.params.title;
+  Word.findOne({"title": title}, function(err, word){
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(word);
+    }
+  });
+});
+
 // On exporte la route pour y avoir accès
 module.exports = wordRoutes;

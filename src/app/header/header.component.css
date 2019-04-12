@@ -1,0 +1,42 @@
+#header-menu{
+  background: orange;
+  height: 4em;
+}
+
+#header-menu input{
+  width: 3em;
+  transition:all 0.3s;
+  border:0px;
+  border-bottom:solid 2px white;
+  padding: 0.6em;
+  font-size: 0.8em;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#header-menu input:hover {
+  width: 14em;
+  background: rgba(255, 255, 255, 0.25);
+}
+#header-menu input:focus {
+  width: 14em;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#header-menu{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header-menu-logo a{
+  color: white;
+  font-size: 2.5em;
+  margin-left: 0.5em;
+}
+
+#header-menu nav i{
+  font-size: 1em;
+  padding: 0.6em;
+  border-bottom:solid 2px white;
+  margin-right: 0.5em;
+}

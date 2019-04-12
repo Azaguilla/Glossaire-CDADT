@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WordService} from '../../../services/word.service';
+import Word from '../../models/word.model';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-single-word',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleWordComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private wordService: WordService,
+              private route: ActivatedRoute) {
   }
 
+  word: Word;
+  ilya: string;
+  open: boolean;
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.wordService.getWordByTitle(params.title).subscribe((data: Word) => {
+        console.log(data);
+        this.word = data;
+        this.ilya = this.wordService.getTimeIlya(this.word.last_edit);
+        this.open = false;
+      });
+    });
+
+  }
+
+  onDisplayKnowMore() {
+    if (this.open === true) {
+      this.open = false;
+    } else {
+      this.open = true;
+    }
+  }
 }

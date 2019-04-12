@@ -1,3 +1,5 @@
+<main class="main-content">
+
 <section id="home">
 
   <!-- Header avec logo -->
@@ -9,7 +11,9 @@
 
   <!-- Zone de recherche -->
   <form class="home-search-area">
-    <input type="search" name="search" placeholder="Rechercher un mot, un thème...">
+    <div class="home-search-center">
+    <input type="search" name="search" placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
+    </div>
   </form>
   <!-- Zone de recherche -->
 
@@ -19,12 +23,16 @@
       <h1>Dernière définition</h1>
     </header>
     <section class="home-last-definition-content" *ngIf="word">
-      <h1>{{ word.title }}</h1>
+      <h1>
+        <a [routerLink]="['definition/', word.title]">
+          {{ word.title }}
+        </a>
+      </h1>
       <p class="description">
         {{ word.definition }}
       </p>
       <div class="button-action">
-        <a href="#">Consulter</a>
+        <a [routerLink]="['definition/', word.title]">Consulter</a>
         <a href="#">Action</a>
       </div>
     </section>
@@ -39,4 +47,4 @@
   <!-- Connexion -->
 </section>
 
-
+</main>
