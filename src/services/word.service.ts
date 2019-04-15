@@ -27,7 +27,7 @@ export class WordService {
   }
 
   /**
-   * Transforme le timestamp en un format de date du type : "il y a 2heures"
+   * Transforme le timestamp en un format de date du type : "il y a 2 heures"
    *
    * @param editDate la date d'édition au format timestamp
    */
@@ -67,9 +67,9 @@ export class WordService {
         /*  si plus de 3 heures */
         return 'Aujourd\'hui à ' + formatDate(editDate, 'HH:mm', 'en-US');
       }
-    } else if (editDatFormat === formatDate(editDate - 60 / 60 / 24, 'dd/MM/yyyy', 'en-US')) {
+    } else if (editDatFormat === formatDate(now - 60 * 60 * 24000, 'dd/MM/yyyy', 'en-US')) {
       return 'Hier à ' + formatDate(editDate, 'HH:mm', 'en-US');
-    } else if (editDatFormat === formatDate(editDate - 60 / 60 / 48, 'dd/MM/yyyy', 'en-US')) {
+    } else if (editDatFormat === formatDate(now - 60 * 60 * 48000, 'dd/MM/yyyy', 'en-US')) {
       return 'Il y a 2 jours à ' + formatDate(editDate, 'HH:mm', 'en-US');
     } else {
       return 'Le ' + formatDate(editDate, 'dd/MM/yyyy', 'en-US') + ' à ' + formatDate(editDate, 'HH:mm', 'en-US');
