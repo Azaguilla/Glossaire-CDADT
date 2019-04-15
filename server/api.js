@@ -13,6 +13,7 @@ mongoose.connect(config.DB, {useNewUrlParser: true}).then(
 
     // Une fois connecté, on spécifie les routes
     const wordRoute = require("./routes/word");
+    const ThemeRoute = require("./routes/theme");
 
     const app = express();
     app.use(bodyParser.json());
@@ -20,6 +21,7 @@ mongoose.connect(config.DB, {useNewUrlParser: true}).then(
 
     //On indique l'url et la route
     app.use("/word", wordRoute);
+    app.use("/theme", ThemeRoute);
 
     const port = process.env.PORT || 4000;
 

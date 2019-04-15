@@ -17,10 +17,11 @@ wordRoutes.route("/").get(function(req, res) {
   });
 });
 
-// Defined edit route
 wordRoutes.route("/:title").get(function(req, res) {
   let title = req.params.title;
-  Word.findOne({"title": title}, function(err, word){
+
+  Word.aggregate([{$lookup: {from: "theme", localField: "themes", foreignField: "_id", as: "themes_words"}},
+    {$match: {"title": title}}]).exec(function(err, word) {
     if (err) {
       console.log(err);
     } else {

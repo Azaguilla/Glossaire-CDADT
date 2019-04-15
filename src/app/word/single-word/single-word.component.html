@@ -11,7 +11,7 @@
     <section>
       <header class="single-word-definition-header">
         <h1>{{ word.title }}</h1>
-        <p>Thèmes : th1, th2</p>
+        <p>Thèmes : <a *ngFor="let theme of word.themes_words; let isLast=last">{{ theme.title }}{{isLast ? '' : ', '}}</a></p>
       </header>
       <div class="single-word-last-edit" *ngIf="ilya">
         Dernière modification : {{ ilya }}
@@ -19,7 +19,7 @@
       <p class="single-word-definition">
         {{ word.definition }}
       </p>
-      <div class="single-word-know-more">
+      <div *ngIf="word.know_more" class="single-word-know-more">
         <a (click)="onDisplayKnowMore()" class="btn">En savoir plus <i [ngClass]="{'far fa-circle': open === false, 'fas fa-check-circle': open === true}"></i></a>
       </div>
       <!--
@@ -27,8 +27,8 @@
         Mots associés : mot1, mot2
       </p>
       -->
-      <p id="single-word-know-more-text" [ngClass]="{'display-none': open === false}">
-        Post haec Gallus Hierapolim profecturus ut expeditioni specie tenus adesset, Antiochensi plebi suppliciter obsecranti ut inediae dispelleret metum, quae per multas difficilisque causas adfore iam sperabatur, non ut mos est principibus, quorum diffusa potestas localibus subinde medetur aerumnis, disponi quicquam statuit vel ex provinciis alimenta transferri conterminis, sed consularem Syriae Theophilum prope adstantem ultima metuenti multitudini dedit id adsidue replicando quod invito rectore nullus egere poterit victu.
+      <p id="single-word-know-more-text" *ngIf="word.know_more" [ngClass]="{'display-none': open === false}">
+        {{ word.know_more }}
       </p>
     </section>
 

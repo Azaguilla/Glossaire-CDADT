@@ -20,9 +20,8 @@ export class SingleWordComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.wordService.getWordByTitle(params.title).subscribe((data: Word) => {
-        console.log(data);
-        this.word = data;
+      this.wordService.getWordByTitle(params.title).subscribe((data: Word[]) => {
+        this.word = data[0];
         this.ilya = this.wordService.getTimeIlya(this.word.last_edit);
         this.open = false;
       });
