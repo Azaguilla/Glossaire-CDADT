@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit {
   onDisplayResult() {
     this.searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
     if (this.searchValue !== null && this.searchValue !== '') {
-      this.onSearch();
+      this.displayResults = true;
     }
   }
 }

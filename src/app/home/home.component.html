@@ -1,50 +1,65 @@
 <main class="main-content">
 
-<section id="home">
+  <section id="home">
 
-  <!-- Header avec logo -->
-  <header class="home-header">
+    <!-- Header avec logo -->
+    <header (click)="onDisplayNone()" class="home-header">
       <img src="assets/img/logo_v4.png">
       <p>Bienvenue sur l'application Glossaire</p>
-  </header>
-  <!-- Header avec logo -->
-
-  <!-- Zone de recherche -->
-  <form class="home-search-area">
-    <div class="home-search-center">
-    <input type="search" name="search" placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
-    </div>
-  </form>
-  <!-- Zone de recherche -->
-
-  <!-- Dernières défintions ajoutées -->
-  <section class="home-last-definition">
-    <header>
-      <h1>Dernière définition</h1>
     </header>
-    <section class="home-last-definition-content" *ngIf="word">
-      <h1>
-        <a [routerLink]="['definition/', word.title]">
-          {{ word.title }}
-        </a>
-      </h1>
-      <p class="description">
-        {{ word.definition }}
-      </p>
-      <div class="button-action">
-        <a [routerLink]="['definition/', word.title]">Consulter</a>
-        <a href="#">Action</a>
-      </div>
-    </section>
-    <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
-  </section>
-  <!-- Dernières défintions ajoutées -->
+    <!-- Header avec logo -->
 
-  <!-- Connexion -->
-  <div class="home-connection">
-    <a class="btn">Se connecter</a>
-  </div>
-  <!-- Connexion -->
-</section>
+    <!-- Zone de recherche -->
+    <form class="home-search-area">
+      <div class="home-search-center">
+        <input id="home-search" (focusin)="onDisplayResult()" (input)="onSearch();"
+               type="search"
+               placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
+        <div id="home-search-results" class="header-menu-search-results"
+             [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}">
+          <div *ngFor="let def of words">
+            <a (click)="onDisplayNone()" [routerLink]="['definition/', def.title]">
+              <i class="fas fa-search"></i>{{ def.title }}
+            </a>
+          </div>
+          <div *ngFor="let thm of theme">
+            <a (click)="onDisplayNone()">
+              <i class="fas fa-search"></i>{{ thm.title }} <span class="header-menu-theme"> en tant que thème </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- Zone de recherche -->
+
+    <!-- Dernières défintions ajoutées -->
+    <section (click)="onDisplayNone()" class="home-last-definition">
+      <header>
+        <h1>Dernière définition</h1>
+      </header>
+      <section class="home-last-definition-content" *ngIf="word">
+        <h1>
+          <a [routerLink]="['definition/', word.title]">
+            {{ word.title }}
+          </a>
+        </h1>
+        <p class="description">
+          {{ word.definition }}
+        </p>
+        <div class="button-action">
+          <a [routerLink]="['definition/', word.title]">Consulter</a>
+          <a href="#">Action</a>
+        </div>
+      </section>
+      <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
+    </section>
+    <!-- Dernières défintions ajoutées -->
+
+    <!-- Connexion -->
+    <div (click)="onDisplayNone()" class="home-connection">
+      <a class="btn">Se connecter</a>
+    </div>
+    <!-- Connexion -->
+  </section>
 
 </main>

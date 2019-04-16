@@ -100,3 +100,53 @@
   cursor: pointer;
   color: white;
 }
+
+
+/*****************************/
+
+.header-menu-search-results i {
+  font-size: 1em;
+  padding: 0.4em;
+  margin-right: 0.5em;
+  border: none;
+}
+
+.header-menu-search-results {
+  z-index: 2;
+  position: absolute;
+  top: 15rem;
+  left: 1rem;
+  height: auto;
+  width: 90vw;
+  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.5);
+}
+
+.header-menu-search-results div {
+  background: white;
+  border: solid 1px #eeeeee;
+  display: flex;
+  transition: all 0.2s;
+}
+
+.header-menu-search-results a {
+  padding: 0.7rem;
+  width: 100%;
+  cursor: pointer;
+  color: lightslategray;
+}
+
+.header-menu-search-results a:hover {
+  text-decoration: none;
+  color: lightslategray;
+}
+
+.header-menu-search-results div:focus,
+.header-menu-search-results div:hover {
+  background: #eeeeee;
+}
+
+.header-menu-theme {
+  color: #ff6949;
+}
+
+
