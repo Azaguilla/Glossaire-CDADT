@@ -15,7 +15,7 @@
         <input id="home-search" (focusin)="onDisplayResult()" (input)="onSearch();"
                type="search"
                placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
-        <div id="home-search-results" class="header-menu-search-results"
+        <div id="home-search-results" class="home-search-results"
              [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}">
           <div *ngFor="let def of words">
             <a (click)="onDisplayNone()" [routerLink]="['definition/', def.title]">
@@ -23,8 +23,8 @@
             </a>
           </div>
           <div *ngFor="let thm of theme">
-            <a (click)="onDisplayNone()">
-              <i class="fas fa-search"></i>{{ thm.title }} <span class="header-menu-theme"> en tant que thème </span>
+            <a [routerLink]="['theme/', thm.title]" (click)="onDisplayNone()">
+              <i class="fas fa-search"></i>{{ thm.title }} <span class="home-search-theme"> en tant que thème </span>
             </a>
           </div>
         </div>
