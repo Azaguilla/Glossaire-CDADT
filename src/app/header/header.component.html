@@ -3,8 +3,10 @@
     <a routerLink=""><i class="fas fa-book-open"></i></a>
   </div>
   <nav>
-    <input id="header-menu-search" (click)="onDisplayResult()" (keyup)="onSearch();" placeholder="RGPD, ANSSI..." type="search"><i class="fas fa-search"></i>
-    <div class="header-menu-search-results" [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}">
+    <input id="header-menu-search" (click)="onDisplayResult()" (keyup)="onSearch();" placeholder="RGPD, ANSSI..."
+           type="search"><i class="fas fa-search"></i>
+    <div class="header-menu-search-results"
+         [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}">
       <div *ngFor="let def of word">
         <a (click)="onDisplayNone()" [routerLink]="['/definition/', def.title]">
           <i class="fas fa-search"></i>{{ def.title }}
@@ -17,5 +19,6 @@
       </div>
     </div>
   </nav>
-  <div (click)="onDisplayNone()" id="overlay" [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}"></div>
+  <div (click)="onDisplayNone()" id="overlay"
+       [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}"></div>
 </header>

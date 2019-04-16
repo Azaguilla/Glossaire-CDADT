@@ -1,13 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {AppComponent} from './app.component';
+import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+import {HeaderComponent} from './header/header.component';
 import {HttpClientModule} from '@angular/common/http';
 import {WordService} from '../services/word.service';
-import { SingleWordComponent } from './word/single-word/single-word.component';
+import {SingleWordComponent} from './word/single-word/single-word.component';
 import {ReactiveFormsModule} from '@angular/forms';
 
 
@@ -29,4 +29,5 @@ import {ReactiveFormsModule} from '@angular/forms';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

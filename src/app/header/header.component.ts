@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WordService} from '../../services/word.service';
 import Word from '../models/word.model';
 import Theme from '../models/theme.model';
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
     // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
     this.word = null;
-    this.theme = null
+    this.theme = null;
 
     // On récupère la valeur de la recherche
     this.searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
 
   onDisplayResult() {
     this.searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
-    if (this.searchValue !== null && this.searchValue !== "") {
+    if (this.searchValue !== null && this.searchValue !== '') {
       this.onSearch();
     }
   }

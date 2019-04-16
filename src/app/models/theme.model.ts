@@ -1,8 +1,9 @@
 export default class Theme {
-    _id: any;
-    title: string;
+  _id: any;
+  title: string;
 
-    constructor() {}
+  constructor() {
+  }
 }
 
 
