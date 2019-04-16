@@ -26,6 +26,15 @@ export class WordService {
     return this.http.get(`${this.uri}/word/${title}`, );
   }
 
+
+  /**
+   * Récupère une liste de mot pour la recherche
+   * @param title Le mot à rechercher
+   */
+  getWordsLikeByTitle(title) {
+    return this.http.get(`${this.uri}/word/search/${title}`, );
+  }
+
   /**
    * Transforme le timestamp en un format de date du type : "il y a 2 heures"
    *

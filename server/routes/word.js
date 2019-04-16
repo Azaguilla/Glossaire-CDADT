@@ -30,5 +30,16 @@ wordRoutes.route("/:title").get(function(req, res) {
   });
 });
 
+wordRoutes.route("/search/:title").get(function(req, res) {
+  let title = req.params.title.toLowerCase().trim();
+  Word.find({"title":  { $regex: title, $options: "i" }}).limit(4).exec(function(err, word) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(word);
+    }
+  });
+});
+
 // On exporte la route pour y avoir accès
 module.exports = wordRoutes;

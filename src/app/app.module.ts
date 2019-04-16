@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import {HttpClientModule} from '@angular/common/http';
 import {WordService} from '../services/word.service';
 import { SingleWordComponent } from './word/single-word/single-word.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({

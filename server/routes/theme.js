@@ -7,36 +7,44 @@ let Theme = require("../models/theme");
 
 // Les actions à effectuer pour l'url /theme/
 themeRoutes.route("/").get(function(req, res) {
-  //l'action suivante récupère tous les themes
-  Theme.find(function(err, word) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(word);
-    }
-  });
+  // //l'action suivante récupère tous les themes
+  // Theme.find(function(err, word) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.json(word);
+  //   }
+  // });
 });
 
 // route récupérant un theme par son id
 themeRoutes.route("/:id").get(function(req, res) {
-  let id = req.params.id;
-  Theme.findOne({"_id": id}, function(err, theme) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(theme);
-    }
-  });
+  // let id = req.params.id;
+  // Theme.findOne({"_id": id}, function(err, theme) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.json(theme);
+  //   }
+  // });
 });
 
 // route récupérant un theme par l'id d'un mot
 themeRoutes.route("/word/:id").get(function(req, res) {
-  let id = req.params.id;
-  let Word = require("../models/word");
+  // let id = req.params.id;
+  //
+  // Theme.findOne({"_id": id}, function(err, theme) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.json(theme);
+  //   }
+  // });
+});
 
-  Word.find({"title": id});
-
-  Theme.findOne({"_id": id}, function(err, theme) {
+themeRoutes.route("/search/:title").get(function(req, res) {
+  let title = req.params.title.toLowerCase().trim();
+  Theme.find({"title":  { $regex: title, $options: "i" }}).limit(2).exec(function(err, theme) {
     if (err) {
       console.log(err);
     } else {

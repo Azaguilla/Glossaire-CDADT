@@ -32,4 +32,12 @@ export class ThemeService {
   getThemeByWordId(id) {
     return this.http.get(`${this.uri}/theme/word/${id}`, );
   }
+
+  /**
+   *
+   * @param title Le thème à rechercher
+   */
+  getThemesLikeByTitle(title) {
+    return this.http.get(`${this.uri}/theme/search/${title}`, );
+  }
 }
