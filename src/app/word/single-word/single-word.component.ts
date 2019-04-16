@@ -26,9 +26,11 @@ export class SingleWordComponent implements OnInit {
         this.open = false;
       });
     });
-
   }
 
+  /**
+   * Indique si la partie "En savoir plus" est ouverte ou non
+   */
   onDisplayKnowMore() {
     if (this.open === true) {
       this.open = false;

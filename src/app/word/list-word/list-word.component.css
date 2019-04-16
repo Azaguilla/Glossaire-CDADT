@@ -1,0 +1,39 @@
+.list-word-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.list-word-header img {
+  width : 100%;
+}
+
+.list-word-header h1{
+  margin: 1em 0;
+  font-size: 1.5em;
+}
+
+.list-word-def-header {
+  display: flex;
+  align-items: center;
+  background: orange;
+  cursor: pointer;
+  border-bottom:solid 1px #cd7d00;
+}
+
+.list-word-def-header h1 {
+  font-size: 1em;
+  margin: 0;
+  padding: 0.7em;
+}
+
+.list-word-def-header i {
+  color: white;
+  margin-left: 1rem;
+}
+
+.list-word-def-content {
+  background: #eeeeee;
+  padding: 1rem 0.5rem;
+}

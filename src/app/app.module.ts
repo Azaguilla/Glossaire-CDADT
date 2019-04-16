@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {WordService} from '../services/word.service';
 import {SingleWordComponent} from './word/single-word/single-word.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { ListWordComponent } from './word/list-word/list-word.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     HomeComponent,
     FooterComponent,
     HeaderComponent,
-    SingleWordComponent
+    SingleWordComponent,
+    ListWordComponent
   ],
   imports: [
     BrowserModule,

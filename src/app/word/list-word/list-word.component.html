@@ -1,0 +1,21 @@
+<app-header></app-header>
+<main class="main-content">
+
+  <!-- Header avec logo -->
+  <header class="list-word-header">
+    <img src="assets/img/hacker-1944688_1280.jpg">
+    <h1>{{ thmTitle }}</h1>
+  </header>
+  <!-- Header avec logo -->
+
+  <!-- Liste des mots -->
+  <section *ngFor="let word of words">
+    <header class="list-word-def-header" (click)="onOpenDef(word._id)">
+      <i class="fas fa-angle-right"></i><h1>{{ word.title }}</h1>
+    </header>
+    <div class="list-word-def-content d-none" id="{{ word._id }}">
+        {{ word.definition }}
+    </div>
+  </section>
+  <!-- Liste des mots -->
+</main>

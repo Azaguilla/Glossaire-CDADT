@@ -21,6 +21,7 @@ export class WordService {
 
   /**
    * Récupère un mot et ses infos par son titre
+   * @param title Le titre de la définition
    */
   getWordByTitle(title) {
     return this.http.get(`${this.uri}/word/${title}`, );
@@ -33,6 +34,14 @@ export class WordService {
    */
   getWordsLikeByTitle(title) {
     return this.http.get(`${this.uri}/word/search/${title}`, );
+  }
+
+  /**
+   * Récupère une liste de définitions appartenant à un thème
+   * @param title Le titre du thème
+   */
+  getWordsByThmTitle(title) {
+    return this.http.get(`${this.uri}/word/thm/${title}`, );
   }
 
   /**
@@ -84,36 +93,4 @@ export class WordService {
       return 'Le ' + formatDate(editDate, 'dd/MM/yyyy', 'en-US') + ' à ' + formatDate(editDate, 'HH:mm', 'en-US');
     }
   }
-
-  // addList(listTitle, listDescription) {
-  //   const object = {
-  //     listTitle,
-  //     listDescription
-  //   };
-  //
-  //   console.log(object);
-  //   this.http.post(`${this.uri}/add`, object)
-  //     .subscribe(res => console.log('Done'));
-  // }
-
-
-  // editList(id) {
-  //   return this
-  //     .http
-  //     .get(`${this.uri}/edit/${id}`);
-  // }
-  //
-  // updateList(listTitle, listDescription, id) {
-  //   const object = {
-  //     listTitle,
-  //     listDescription
-  //   };
-  //   this.http.post(`${this.uri}/update/${id}`, object).subscribe(res => console.log('Update done'));
-  // }
-  //
-  // deleteBusiness(id) {
-  //   return this
-  //     .http
-  //     .get(`${this.uri}/delete/${id}`);
-  // }
 }

@@ -41,5 +41,18 @@ wordRoutes.route("/search/:title").get(function(req, res) {
   });
 });
 
+wordRoutes.route("/thm/:title").get(function(req, res) {
+  let title = req.params.title;
+
+  Word.aggregate([{$lookup: {from: "theme", localField: "themes", foreignField: "_id", as: "themes_words"}},
+    {$match: {"themes_words.title": title}}]).exec(function(err, word) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(word);
+    }
+  });
+});
+
 // On exporte la route pour y avoir accès
 module.exports = wordRoutes;
