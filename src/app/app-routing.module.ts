@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {SingleWordComponent} from './word/single-word/single-word.component';
 import {ListWordComponent} from './word/list-word/list-word.component';
+import {AuthenticationComponent} from './authentication/authentication.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'theme/:title',
     component: ListWordComponent
+  },
+  {
+    path: 'connexion',
+    component: AuthenticationComponent
   }
 ];
 

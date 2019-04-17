@@ -12,6 +12,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ListWordComponent} from './word/list-word/list-word.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
+import {AuthenticationComponent} from './authentication/authentication.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthenticationService} from '../services/authentication.service';
 
 
 @NgModule({
@@ -21,16 +24,20 @@ import {environment} from '../environments/environment';
     FooterComponent,
     HeaderComponent,
     SingleWordComponent,
-    ListWordComponent
+    ListWordComponent,
+    AuthenticationComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    ReactiveFormsModule
   ],
   providers: [
-    WordService
+    WordService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

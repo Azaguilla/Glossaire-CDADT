@@ -1,0 +1,56 @@
+<main class="main-content">
+
+  <!-- Header avec logo -->
+  <header class="authentication-header">
+    <img src="assets/img/logo_v4.png">
+    <p>Connexion</p>
+  </header>
+  <!-- Header avec logo -->
+
+  <!--Formulaire de connexion -->
+  <form (ngSubmit)="onSubmitForm()" [formGroup]="authForm" novalidate>
+    <div class="authentication-form-group">
+      <label>Adresse mail</label>
+      <input [ngClass]="{ 'valid-control': authForm.controls['email'].valid, 'invalid-control': authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)}" type="text" class="form-control" formControlName="email" #email/>
+      <div
+        *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
+        class="authentication-form-alert">
+        Vous devez saisir une adresse mail.
+      </div>
+      <div
+        *ngIf="authForm.controls['email'].valid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
+        class="authentication-form-valid">
+        Adresse mail valide.
+      </div>
+    </div>
+    <div class="authentication-form-group">
+      <label>Mot de passe</label>
+      <input [ngClass]="{ 'valid-control': authForm.controls['password'].valid, 'invalid-control': authForm.controls['password'].invalid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)}" type="text" class="form-control" formControlName="password" #password/>
+
+      <div
+        *ngIf="authForm.controls['password'].invalid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
+        class="authentication-form-alert">
+        Vous devez saisir un mot de passe.
+      </div>
+      <div
+        *ngIf="authForm.controls['password'].valid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
+        class="authentication-form-valid">
+        Mot de passe valide.
+      </div>
+    </div>
+    <div class="authentication-form-group">
+      <a class="authentication-form-fgt-psw" [routerLink]="['']"> Mot de passe oublié ?</a>
+    </div>
+    <div class="authentication-form-submit">
+      <button type="submit"
+              [disabled]="authForm.invalid"
+              class="btn">Connexion
+      </button>
+    </div>
+  </form>
+  <!--Formulaire de connexion -->
+
+  <!-- Bouton page d'accueil -->
+    <a class="authentication-button-home text-center py-3" [routerLink]="['']"> Accueil</a>
+  <!-- Bouton page d'accueil -->
+</main>

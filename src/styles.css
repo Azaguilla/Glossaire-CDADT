@@ -1,0 +1,9 @@
+body{
+  min-height:100vh;
+  position:relative;
+  padding-bottom: 3.5rem;
+}
+
+.main-content{
+  margin-bottom: 2em;
+}

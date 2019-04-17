@@ -10,7 +10,7 @@
     <!-- Header avec logo -->
 
     <!-- Zone de recherche -->
-    <form class="home-search-area">
+    <div class="home-search-area">
       <div class="home-search-center">
         <input id="home-search" (focusin)="onDisplayResult()" (input)="onSearch();"
                type="search"
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-    </form>
+    </div>
     <!-- Zone de recherche -->
 
     <!-- Dernières défintions ajoutées -->
@@ -57,7 +57,7 @@
 
     <!-- Connexion -->
     <div (click)="onDisplayNone()" class="home-connection">
-      <a class="btn">Se connecter</a>
+      <a [routerLink]="['connexion']" class="btn">Se connecter</a>
     </div>
     <!-- Connexion -->
   </section>
