@@ -9,7 +9,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {WordService} from '../services/word.service';
 import {SingleWordComponent} from './word/single-word/single-word.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { ListWordComponent } from './word/list-word/list-word.component';
+import {ListWordComponent} from './word/list-word/list-word.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { ListWordComponent } from './word/list-word/list-word.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
     WordService
