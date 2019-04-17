@@ -13,7 +13,7 @@
         </a>
       </div>
       <div *ngFor="let thm of theme">
-        <a [routerLink]="['theme/', thm.title]" (click)="onDisplayNone()">
+        <a [routerLink]="['/theme/', thm.title]" (click)="onDisplayNone()">
           <i class="fas fa-search"></i>{{ thm.title }} <span class="header-menu-theme"> en tant que thème </span>
         </a>
       </div>

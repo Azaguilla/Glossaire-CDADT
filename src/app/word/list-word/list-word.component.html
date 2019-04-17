@@ -10,12 +10,23 @@
 
   <!-- Liste des mots -->
   <section *ngFor="let word of words">
+
+    <!-- Titre -->
     <header class="list-word-def-header" (click)="onOpenDef(word._id)">
-      <i class="fas fa-angle-right"></i><h1>{{ word.title }}</h1>
+      <i id="i-{{ word._id }}" class="fas fa-angle-right"></i>
+      <h1>{{ word.title }}</h1>
     </header>
-    <div class="list-word-def-content d-none" id="{{ word._id }}">
+    <!-- Titre -->
+
+    <!-- Contenu -->
+    <div class="list-word-def-content none" id="{{ word._id }}">
+      <div class="list-word-def-background">
         {{ word.definition }}
+      </div>
     </div>
+    <!-- Contenu -->
+
   </section>
   <!-- Liste des mots -->
+
 </main>
