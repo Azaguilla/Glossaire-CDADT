@@ -4,6 +4,9 @@ import {HomeComponent} from './home/home.component';
 import {SingleWordComponent} from './word/single-word/single-word.component';
 import {ListWordComponent} from './word/list-word/list-word.component';
 import {AuthenticationComponent} from './authentication/authentication.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {RegisterComponent} from './register/register.component';
+import {AuthGuardService} from '../services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -21,6 +24,16 @@ const routes: Routes = [
   {
     path: 'connexion',
     component: AuthenticationComponent
+  },
+  {
+    path: 'inscription',
+    component: RegisterComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

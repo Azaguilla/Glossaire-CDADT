@@ -15,6 +15,8 @@ import {environment} from '../environments/environment';
 import {AuthenticationComponent} from './authentication/authentication.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthenticationService} from '../services/authentication.service';
+import {RegisterComponent} from './register/register.component';
+import {AuthGuardService} from '../services/auth-guard.service';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import {AuthenticationService} from '../services/authentication.service';
     SingleWordComponent,
     ListWordComponent,
     AuthenticationComponent,
-    DashboardComponent
+    DashboardComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import {AuthenticationService} from '../services/authentication.service';
   ],
   providers: [
     WordService,
-    AuthenticationService
+    AuthenticationService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

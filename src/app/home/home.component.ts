@@ -4,6 +4,7 @@ import {WordService} from '../../services/word.service';
 import {DatePipe, formatDate} from '@angular/common';
 import Theme from '../models/theme.model';
 import {ThemeService} from '../../services/theme.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,9 @@ export class HomeComponent implements OnInit {
   theme: Theme[];
   displayResults: boolean;
 
-  constructor(private wordService: WordService, private themeService: ThemeService) {
+  constructor(private wordService: WordService,
+              private themeService: ThemeService,
+              private authService: AuthenticationService) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
   }
@@ -52,7 +55,7 @@ export class HomeComponent implements OnInit {
 
     // On position les résultats en fonction de l'input
     const inputOffsetLeft = inputSearch.offsetLeft;
-    const heightInputSearch =  inputSearch.offsetHeight;
+    const heightInputSearch = inputSearch.offsetHeight;
     const inputOffsetTop = heightInputSearch + inputSearch.offsetTop + 5;
 
     const divResults = (document.getElementById('home-search-results') as HTMLInputElement);

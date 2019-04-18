@@ -10,10 +10,6 @@
   <!--Formulaire de connexion -->
   <form (ngSubmit)="onSubmitForm()" [formGroup]="authForm" novalidate>
 
-    <!-- Message d'erreur -->
-    <p class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
-    <!-- Message d'erreur -->
-
     <div class="authentication-form-group">
       <label>Adresse mail</label>
       <input
@@ -22,14 +18,15 @@
       <div
         *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir une adresse mail
+        Vous devez saisir une adresse mail.
       </div>
       <div
         *ngIf="authForm.controls['email'].valid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
         class="authentication-form-valid">
-        Adresse mail valide
+        Adresse mail valide.
       </div>
     </div>
+
     <div class="authentication-form-group">
       <label>Mot de passe</label>
       <input
@@ -39,17 +36,53 @@
       <div
         *ngIf="authForm.controls['password'].invalid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir un mot de passe d'au moins 6 caractères
+        Vous devez saisir un mot de passe d'au moins 6 caractères.
       </div>
       <div
         *ngIf="authForm.controls['password'].valid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
         class="authentication-form-valid">
-        Mot de passe valide
+        Mot de passe valide.
       </div>
     </div>
+
+    <div class="authentication-form-group">
+      <label>Nom</label>
+      <input
+        [ngClass]="{ 'valid-control': authForm.controls['lastname'].valid, 'invalid-control': authForm.controls['lastname'].invalid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)}"
+        type="text" class="form-control" formControlName="lastname" #lastname/>
+      <div
+        *ngIf="authForm.controls['lastname'].invalid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)"
+        class="authentication-form-alert">
+        Vous devez saisir un nom.
+      </div>
+      <div
+        *ngIf="authForm.controls['lastname'].valid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)"
+        class="authentication-form-valid">
+        Nom valide.
+      </div>
+    </div>
+
+    <div class="authentication-form-group">
+      <label>Prénom</label>
+      <input
+        [ngClass]="{ 'valid-control': authForm.controls['firstname'].valid, 'invalid-control': authForm.controls['firstname'].invalid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)}"
+        type="text" class="form-control" formControlName="firstname" #firstname/>
+      <div
+        *ngIf="authForm.controls['firstname'].invalid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)"
+        class="authentication-form-alert">
+        Vous devez saisir un prénom.
+      </div>
+      <div
+        *ngIf="authForm.controls['firstname'].valid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)"
+        class="authentication-form-valid">
+        Prénom valide.
+      </div>
+    </div>
+
     <div class="authentication-form-group">
       <a class="authentication-form-fgt-psw" [routerLink]="['']"> Mot de passe oublié ?</a>
     </div>
+
     <div class="authentication-form-submit">
       <button type="submit"
               [disabled]="authForm.invalid"

@@ -3,7 +3,9 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
   mongoose = require("mongoose"),
-  config = require("./bin/db");
+  config = require("./bin/db"),
+  passport = require("passport");
+require("./config/passport");
 
 /* On se connecte à la Base de données*/
 mongoose.Promise = global.Promise;
@@ -14,18 +16,23 @@ mongoose.connect(config.DB, {useNewUrlParser: true}).then(
     // Une fois connecté, on spécifie les routes
     const wordRoute = require("./routes/word");
     const ThemeRoute = require("./routes/theme");
+    const UserRoute = require("./routes/user");
 
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
 
+    // On initialise passport (pour la connexion des utilisateurs
+    app.use(passport.initialize());
+
     //On indique l'url et la route
     app.use("/word", wordRoute);
     app.use("/theme", ThemeRoute);
+    app.use("/user", UserRoute);
 
     const port = process.env.PORT || 4000;
 
-    const server = app.listen(port, function () {
+    const server = app.listen(port, function() {
       console.log("En écoute sur le port " + port);
     });
 

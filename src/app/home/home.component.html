@@ -57,7 +57,9 @@
 
     <!-- Connexion -->
     <div (click)="onDisplayNone()" class="home-connection">
-      <a [routerLink]="['connexion']" class="btn">Se connecter</a>
+      <a *ngIf="!authService.isLoggedIn()" [routerLink]="['connexion']" class="btn">Se connecter</a>
+      <a *ngIf="authService.isLoggedIn()" [routerLink]="['dashboard']" class="btn">Administration</a>
+      <a *ngIf="authService.isLoggedIn()" (click)="authService.logout()" class="btn">Déconnexion</a>
     </div>
     <!-- Connexion -->
   </section>
