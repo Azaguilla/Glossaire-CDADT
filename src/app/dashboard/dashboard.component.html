@@ -1,8 +1,42 @@
 <app-header></app-header>
 <main class="main-content">
 
-  <header class="dashboard-page-header">
+  <header class="dashboard-header">
     <p>Administration</p>
   </header>
+
+  <div class="dashboard-button">
+
+    <a class="dashboard-button-waitingdef" [routerLink]="['']">
+      <p>6</p>
+      <h1>Définitions en attente</h1>
+    </a>
+
+    <a class="dashboard-button-defadd" [routerLink]="['']">
+      <i class="fas fa-plus"></i>
+      <h1>Nouvelle définition</h1>
+    </a>
+
+    <a class="dashboard-button-usermanage" [routerLink]="['']">
+      <i class="fas fa-pencil-alt"></i>
+      <h1>Gérer un utilisateur</h1>
+    </a>
+
+    <a class="dashboard-button-useradd" [routerLink]="['/utilisateur/ajouter']">
+      <i class="fas fa-user-plus"></i>
+      <h1>Créer un utilisateur</h1>
+    </a>
+
+    <a class="dashboard-button-defmanage" [routerLink]="['']">
+      <i class="fas fa-edit"></i>
+      <h1>Gérer une définition</h1>
+    </a>
+
+    <a class="dashboard-button-home" [routerLink]="['']">
+      <i class="fas fa-sign-out-alt"></i>
+      <h1>Retour à l'accueil</h1>
+    </a>
+
+  </div>
 
 </main>

@@ -1,0 +1,71 @@
+.dashboard-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0 0 0;
+  color: lightslategray;
+}
+
+.dashboard-button {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dashboard-button a {
+  width: 40%;
+  margin: 1em;
+}
+.dashboard-button a:hover {
+  text-decoration: none;
+}
+
+.dashboard-button a h1 {
+  font-size: 1em;
+  text-align: center;
+  margin: 0.5em 0 0 0 ;
+}
+
+.dashboard-button-waitingdef p,
+.dashboard-button a i {
+  font-size: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-button-useradd,
+.dashboard-button-defmanage,
+.dashboard-button-defadd,
+.dashboard-button-waitingdef,
+.dashboard-button-usermanage,
+.dashboard-button-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:1em;
+  color:white;
+}
+
+.dashboard-button-useradd {
+  background: #2db25d;
+}
+
+.dashboard-button-home {
+  background: darkorchid;
+}
+
+.dashboard-button-defmanage{
+  background: #00bfac;
+}
+
+.dashboard-button-defadd{
+  background: orange;
+}
+
+.dashboard-button-waitingdef{
+  background: dodgerblue;
+}
+
+.dashboard-button-usermanage {
+  background: #ff6949;
+}

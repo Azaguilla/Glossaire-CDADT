@@ -26,7 +26,7 @@ const routes: Routes = [
     component: AuthenticationComponent
   },
   {
-    path: 'inscription',
+    path: 'utilisateur/ajouter',
     component: RegisterComponent,
     canActivate: [AuthGuardService]
   },
