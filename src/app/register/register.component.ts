@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   public authForm: FormGroup;
   errorMessage: string;
   credentials: TokenPayload = {
+    username: '',
     email: '',
     password: '',
     firstname: '',
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
    */
   initForm() {
     this.authForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]],
       firstname: ['', [Validators.required]],
@@ -46,11 +48,13 @@ export class RegisterComponent implements OnInit {
    * Sinon on affiche l'erreur
    */
   onSubmitForm() {
+    const username = this.authForm.get('username').value;
     const email = this.authForm.get('email').value;
     const password = this.authForm.get('password').value;
     const firstname = this.authForm.get('firstname').value;
     const lastname = this.authForm.get('lastname').value;
 
+    this.credentials.username = username;
     this.credentials.email = email;
     this.credentials.password = password;
     this.credentials.firstname = firstname;

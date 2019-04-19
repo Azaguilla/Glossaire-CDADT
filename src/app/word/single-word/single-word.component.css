@@ -37,8 +37,14 @@
 
 .single-word-know-more a{
   color: rgb(0, 86, 179);
+  box-shadow: none;
   cursor: pointer;
 }
+.single-word-know-more a:hover{
+  color: rgb(0, 86, 179);
+  box-shadow: none;
+}
+
 
 .single-word-know-more i{
   color: lightslategray;

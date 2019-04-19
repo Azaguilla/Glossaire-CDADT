@@ -90,9 +90,10 @@
 
 .home-connection a{
   margin-top:2.5em;
-  border-color:  orange;
+  border: solid 1px orange;
   color: orange;
   border-radius: 10px;
+  box-shadow: none;
 }
 
 .home-connection a:hover{

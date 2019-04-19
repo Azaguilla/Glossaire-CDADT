@@ -15,19 +15,19 @@
     <!-- Message d'erreur -->
 
     <div class="authentication-form-group">
-      <label>Adresse mail</label>
+      <label>Nom d'utilisateur</label>
       <input
-        [ngClass]="{ 'valid-control': authForm.controls['email'].valid, 'invalid-control': authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)}"
-        type="text" class="form-control" formControlName="email" #email/>
+        [ngClass]="{ 'valid-control': authForm.controls['username'].valid, 'invalid-control': authForm.controls['username'].invalid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)}"
+        type="text" class="form-control" formControlName="username" #username/>
       <div
-        *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
+        *ngIf="authForm.controls['username'].invalid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir une adresse mail
+        Vous devez saisir un nom d'utilisateur
       </div>
       <div
-        *ngIf="authForm.controls['email'].valid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
+        *ngIf="authForm.controls['username'].valid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
         class="authentication-form-valid">
-        Adresse mail valide
+        Nom d'utilisateur valide
       </div>
     </div>
     <div class="authentication-form-group">

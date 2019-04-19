@@ -17,6 +17,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthenticationService} from '../services/authentication.service';
 import {RegisterComponent} from './register/register.component';
 import {AuthGuardService} from '../services/auth-guard.service';
+import {MenuAdminComponent} from './menu-admin/menu-admin.component';
+import {MDBRootModule} from 'angular-bootstrap-md';
 
 
 @NgModule({
@@ -29,14 +31,16 @@ import {AuthGuardService} from '../services/auth-guard.service';
     ListWordComponent,
     AuthenticationComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
+    MenuAdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MDBRootModule
   ],
   providers: [
     WordService,

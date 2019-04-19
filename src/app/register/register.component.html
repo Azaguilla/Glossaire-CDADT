@@ -1,18 +1,49 @@
+<app-header></app-header>
 <main class="main-content">
 
   <!-- Header avec logo -->
-  <header class="authentication-header">
-    <img src="assets/img/logo_v4.png">
-    <p>Connexion</p>
+  <header class="register-header">
+    <h1>Création d'un utilisateur</h1>
   </header>
   <!-- Header avec logo -->
+
+  <!-- Zone d'actions -->
+  <div class="register-header-actions">
+    <input class="form-control" type="search" placeholder="Rechercher">
+    <a class="btn" [routerLink]="['/utilisateur/ajouter']">
+      <i class="fas fa-plus"></i>
+      Nouveau
+    </a>
+  </div>
+  <!-- Zone d'actions -->
 
   <!--Formulaire de connexion -->
   <form (ngSubmit)="onSubmitForm()" [formGroup]="authForm" novalidate>
 
     <div class="authentication-form-group">
+      <label>Nom d'utilisateur</label>
+      <input
+        class="md-form"
+        mdbInput
+        placeholder="Nom d'utilisateur"
+        [ngClass]="{ 'valid-control': authForm.controls['username'].valid, 'invalid-control': authForm.controls['username'].invalid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)}"
+        type="text" class="form-control" formControlName="username" #username/>
+      <div
+        *ngIf="authForm.controls['username'].invalid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
+        class="authentication-form-alert">
+        Vous devez saisir un nom d'utilisateur.
+      </div>
+      <div
+        *ngIf="authForm.controls['username'].valid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
+        class="authentication-form-valid">
+        Nom d'utilisateur valide.
+      </div>
+    </div>
+
+    <div class="authentication-form-group">
       <label>Adresse mail</label>
       <input
+        placeholder="Adresse mail"
         [ngClass]="{ 'valid-control': authForm.controls['email'].valid, 'invalid-control': authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)}"
         type="text" class="form-control" formControlName="email" #email/>
       <div
@@ -30,6 +61,7 @@
     <div class="authentication-form-group">
       <label>Mot de passe</label>
       <input
+        placeholder="Mot de passe"
         [ngClass]="{ 'valid-control': authForm.controls['password'].valid, 'invalid-control': authForm.controls['password'].invalid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)}"
         type="password" class="form-control" formControlName="password" #password/>
 
@@ -48,6 +80,7 @@
     <div class="authentication-form-group">
       <label>Nom</label>
       <input
+        placeholder="Nom"
         [ngClass]="{ 'valid-control': authForm.controls['lastname'].valid, 'invalid-control': authForm.controls['lastname'].invalid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)}"
         type="text" class="form-control" formControlName="lastname" #lastname/>
       <div
@@ -65,6 +98,7 @@
     <div class="authentication-form-group">
       <label>Prénom</label>
       <input
+        placeholder="Prénom"
         [ngClass]="{ 'valid-control': authForm.controls['firstname'].valid, 'invalid-control': authForm.controls['firstname'].invalid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)}"
         type="text" class="form-control" formControlName="firstname" #firstname/>
       <div
@@ -79,20 +113,30 @@
       </div>
     </div>
 
-    <div class="authentication-form-group">
-      <a class="authentication-form-fgt-psw" [routerLink]="['']"> Mot de passe oublié ?</a>
-    </div>
+    <section class="authentication-form-group">
+      <h1>Droits :</h1>
+      <div class="register-rights">
+        <div>
+          <mdb-checkbox [default]="true">Utilisateur</mdb-checkbox>
+          <mdb-checkbox [default]="true">Modérateur</mdb-checkbox>
+        </div>
+        <div>
+          <mdb-checkbox [default]="true">Editeur</mdb-checkbox>
+          <mdb-checkbox [default]="true">Administrateur</mdb-checkbox>
+        </div>
+      </div>
+    </section>
 
-    <div class="authentication-form-submit">
+    <div class="register-form-submit">
       <button type="submit"
               [disabled]="authForm.invalid"
-              class="btn">Connexion
+              class="btn"><i class="fas fa-check"></i>Ajouter
       </button>
     </div>
   </form>
   <!--Formulaire de connexion -->
 
   <!-- Bouton page d'accueil -->
-  <a class="authentication-button-home text-center py-3" [routerLink]="['']"> Accueil</a>
+  <app-menu-admin></app-menu-admin>
   <!-- Bouton page d'accueil -->
 </main>

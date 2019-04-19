@@ -13,7 +13,7 @@ export class AuthenticationComponent implements OnInit {
   public authForm: FormGroup;
   errorMessage: string;
   credentials: TokenPayload = {
-    email: '',
+    username: '',
     password: ''
   };
 
@@ -31,7 +31,7 @@ export class AuthenticationComponent implements OnInit {
    */
   initForm() {
     this.authForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]]
     });
   }
@@ -42,9 +42,9 @@ export class AuthenticationComponent implements OnInit {
    * Sinon on affiche l'erreur
    */
   onSubmitForm() {
-    const email = this.authForm.get('email').value;
+    const username = this.authForm.get('username').value;
     const password = this.authForm.get('password').value;
-    this.credentials.email = email;
+    this.credentials.username = username;
     this.credentials.password = password;
 
     this.authService.login(this.credentials).subscribe(() => {

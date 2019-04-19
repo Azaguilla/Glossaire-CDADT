@@ -7,10 +7,10 @@ let User = require("../models/user");
 // userameField permet de définir le login à utiliser : on veut l'email et non pas le username
 passport.use(new LocalStrategy({
     passwordField: "password",
-    usernameField: "email",
+    usernameField: "username",
   },
   function(username, password, done) {
-    User.findOne({email: username}, function(err, user) {
+    User.findOne({username: username}, function(err, user) {
       if (err) {
         return done(err);
       }

@@ -1,17 +1,14 @@
-.authentication-header {
+.register-header{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3em 0 1em 0;
+  padding: 2rem 0 1em 0;
 }
 
-.authentication-header img {
-  width: 60%;
-}
-
-.authentication-header p {
-  margin-top: 2em;
+.register-header h1 {
   color: lightslategray;
+  margin: 0;
+  font-size: 1em;
 }
 
 .authentication-button-home {
@@ -33,24 +30,25 @@
 
 
 .authentication-form-group {
-  padding: 0.5rem;
+  padding: 0 0 0.5rem 0;
 }
 
-.authentication-form-submit {
+.register-form-submit {
   padding-top: 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
-.authentication-form-submit button {
-  border: solid 1px rgb(0, 86, 179);
-  color: rgb(0, 86, 179);
-  background: rgb(0, 86, 179);
-  box-shadow: inset 0 0 0 100px white;
-  transition: all 0.2s ease-in-out;
-  border-radius: 10px;
+.register-form-submit button {
+  box-shadow: none;
+  color: white;
+  background: #2db25d;
+  border: solid 1px #2db25d;
+  padding: 0.375em 0.75em;
+  font-size: 1em;
+  margin:0;
+  text-transform: initial;
 }
-
 
 .authentication-form-submit button:hover {
   color: white;
@@ -67,14 +65,61 @@
 
 .authentication-form-alert {
   color: #ff6949;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 .authentication-form-valid {
   color: #2db25d;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 .authentication-form-fgt-psw {
   color: rgb(0, 86, 179);
+}
+
+.register-header-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.register-header-actions input {
+  width: 50%;
+}
+
+.register-header-actions a {
+  box-shadow: none;
+  color: white;
+  background: #2db25d;
+  border: solid 1px #2db25d;
+  padding: 0.375em 0.75em;
+  font-size: 1em;
+  margin:0;
+  text-transform: initial;
+}
+
+form {
+  border: solid 1px #ced4da;
+  margin: 0.5em;
+  padding: 0.5rem;
+}
+
+div label {
+  display:none;
+}
+
+section.authentication-form-group {
+  border-top: solid 2px #ced4da;
+  margin-top: 1em;
+}
+
+section.authentication-form-group h1 {
+  font-size: 1em;
+  color: lightslategray;
+  padding-top: 1em;
+}
+
+.register-rights {
+  display:flex;
+  justify-content: space-between;
 }
