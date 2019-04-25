@@ -1,0 +1,63 @@
+.menu-admin {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  width: 100vw;
+  height: 3rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.menu-admin ul{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+}
+
+.menu-admin li {
+  list-style: none;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.menu-admin a {
+  color: white;
+  text-decoration: none;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-admin-useradd {
+  background: #2db25d;
+}
+
+.menu-admin-home {
+  background: darkorchid;
+}
+
+.menu-admin-defmanage{
+  background: #ff6949;
+}
+
+.menu-admin-defadd{
+  background: orange;
+}
+
+.menu-admin-waitingdef{
+  background: dodgerblue;
+  font-weight:500;
+}
+
+.menu-admin-usermanage {
+  background: #00bfac;
+}
+
+.menu-admin-waitingdef {
+  padding : 0;
+  margin: 0;
+}
