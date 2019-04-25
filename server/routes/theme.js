@@ -7,14 +7,14 @@ let Theme = require("../models/theme");
 
 // Les actions à effectuer pour l'url /theme/
 themeRoutes.route("/").get(function(req, res) {
-  // //l'action suivante récupère tous les themes
-  // Theme.find(function(err, word) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     res.json(word);
-  //   }
-  // });
+  //l'action suivante récupère tous les themes
+  Theme.find(function(err, themes) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(themes);
+    }
+  });
 });
 
 // route récupérant un theme par son id

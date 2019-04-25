@@ -3,6 +3,7 @@ export default class Word {
   title: string;
   last_edit: number;
   definition: string;
+  themes: [];
   themes_words: [];
   know_more: string;
 

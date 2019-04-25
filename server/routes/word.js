@@ -54,5 +54,17 @@ wordRoutes.route("/thm/:title").get(function(req, res) {
   });
 });
 
+wordRoutes.route("/add").post(function(req, res) {
+  const wordInfo = req.body;
+  let word = new Word(wordInfo);
+
+  word.save().then(definition => {
+    res.status(200).json({'definition': 'Ajout effectué'});
+  })
+    .catch(err => {
+      res.status(400).send("Sauvegarde non effectuée : " + err);
+    });
+});
+
 // On exporte la route pour y avoir accès
 module.exports = wordRoutes;

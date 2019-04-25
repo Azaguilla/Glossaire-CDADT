@@ -19,7 +19,7 @@ import {RegisterComponent} from './register/register.component';
 import {AuthGuardService} from '../services/auth-guard.service';
 import {MenuAdminComponent} from './menu-admin/menu-admin.component';
 import {MDBRootModule} from 'angular-bootstrap-md';
-import { AddWordComponent } from './word/add-word/add-word.component';
+import {AddWordComponent} from './word/add-word/add-word.component';
 
 
 @NgModule({

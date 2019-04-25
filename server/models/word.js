@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 // Schema et collection pour un mot
 var schemaWord = new mongoose.Schema({
-  wordDefinition: "string",
-  wordLastEdit: "string",
-  wordTitle: "string",
+  definition: "string",
+  know_more: "string",
+  last_edit: "string",
+  themes: [Schema.Types.ObjectId],
+  title: "string",
 }, {
   collection: "word",
 });

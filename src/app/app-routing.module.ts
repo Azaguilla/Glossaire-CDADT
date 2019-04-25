@@ -7,6 +7,7 @@ import {AuthenticationComponent} from './authentication/authentication.component
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthGuardService} from '../services/auth-guard.service';
+import {AddWordComponent} from './word/add-word/add-word.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'utilisateur/ajouter',
     component: RegisterComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'mot/ajouter',
+    component: AddWordComponent,
     canActivate: [AuthGuardService]
   },
   {

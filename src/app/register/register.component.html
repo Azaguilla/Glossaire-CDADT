@@ -32,6 +32,7 @@
     <div class="authentication-form-group">
       <label>Nom d'utilisateur</label>
       <input
+        maxlength="31"
         class="md-form"
         mdbInput
         placeholder="Nom d'utilisateur"
@@ -40,7 +41,12 @@
       <div
         *ngIf="authForm.controls['username'].invalid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir un nom d'utilisateur.
+        <p *ngIf = "authForm.controls['username'].errors?.required">
+          Vous devez saisir un nom d'utilisateur.
+        </p>
+        <p *ngIf = "authForm.controls['username'].errors?.maxlength">
+          Le nom d'utilisateur ne doit pas dépasser 30 caractères.
+        </p>
       </div>
       <div
         *ngIf="authForm.controls['username'].valid && (authForm.controls['username'].dirty || authForm.controls['username'].touched)"
@@ -58,7 +64,15 @@
       <div
         *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir une adresse mail.
+        <p *ngIf = "authForm.controls['email'].errors?.required">
+          Vous devez saisir une adresse mail.
+        </p>
+        <p *ngIf = "authForm.controls['email'].errors?.maxlength">
+          L'adresse mail ne doit pas dépasser 60 caractères.
+        </p>
+        <p *ngIf = "authForm.controls['email'].errors?.email">
+          Vous devez saisir une adresse mail valide.
+        </p>
       </div>
       <div
         *ngIf="authForm.controls['email'].valid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)"
@@ -77,7 +91,15 @@
       <div
         *ngIf="authForm.controls['password'].invalid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
         class="authentication-form-alert">
-        Vous devez saisir un mot de passe d'au moins 6 caractères.
+        <p *ngIf = "authForm.controls['password'].errors?.required">
+          Vous devez saisir un mot de passe.
+        </p>
+        <p *ngIf = "authForm.controls['password'].errors?.maxlength">
+          Le mot de passe ne doit pas dépasser 30 caractères.
+        </p>
+        <p *ngIf = "authForm.controls['password'].errors?.minlength">
+          Vous devez saisir au minimum 8 caractères.
+        </p>
       </div>
       <div
         *ngIf="authForm.controls['password'].valid && (authForm.controls['password'].dirty || authForm.controls['password'].touched)"
@@ -90,36 +112,14 @@
       <label>Nom</label>
       <input
         placeholder="Nom"
-        [ngClass]="{ 'valid-control': authForm.controls['lastname'].valid, 'invalid-control': authForm.controls['lastname'].invalid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)}"
         type="text" class="form-control" formControlName="lastname" #lastname/>
-      <div
-        *ngIf="authForm.controls['lastname'].invalid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)"
-        class="authentication-form-alert">
-        Vous devez saisir un nom.
-      </div>
-      <div
-        *ngIf="authForm.controls['lastname'].valid && (authForm.controls['lastname'].dirty || authForm.controls['lastname'].touched)"
-        class="authentication-form-valid">
-        Nom valide.
-      </div>
     </div>
 
     <div class="authentication-form-group">
       <label>Prénom</label>
       <input
         placeholder="Prénom"
-        [ngClass]="{ 'valid-control': authForm.controls['firstname'].valid, 'invalid-control': authForm.controls['firstname'].invalid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)}"
         type="text" class="form-control" formControlName="firstname" #firstname/>
-      <div
-        *ngIf="authForm.controls['firstname'].invalid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)"
-        class="authentication-form-alert">
-        Vous devez saisir un prénom.
-      </div>
-      <div
-        *ngIf="authForm.controls['firstname'].valid && (authForm.controls['firstname'].dirty || authForm.controls['firstname'].touched)"
-        class="authentication-form-valid">
-        Prénom valide.
-      </div>
     </div>
 
     <section class="authentication-form-group">

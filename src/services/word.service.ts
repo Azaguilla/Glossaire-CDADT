@@ -45,6 +45,14 @@ export class WordService {
   }
 
   /**
+   * Ajoute une définition et ses informations dans la BDD
+   * @param wordInfo La liste des infos du mot
+   */
+  addWord(wordInfo) {
+    this.http.post(`${this.uri}/word/add`, wordInfo).subscribe(res => console.log('Done'));
+  }
+
+  /**
    * Transforme le timestamp en un format de date du type : "il y a 2 heures"
    *
    * @param editDate la date d'édition au format timestamp
