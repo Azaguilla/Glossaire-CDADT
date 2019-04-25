@@ -123,3 +123,32 @@ section.authentication-form-group h1 {
   display:flex;
   justify-content: space-between;
 }
+
+.message-success,
+.message-error {
+  width: 100%;
+  font-weight: 400;
+  padding: 0.5em;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-success {
+  background: #d4ffda;
+  color: #2db25d;
+}
+
+.message-error {
+  background: #ffe9db;
+  color: #ff6949;
+}
+
+.message-error i,
+.message-success i {
+  padding:1rem;
+  cursor: pointer;
+}

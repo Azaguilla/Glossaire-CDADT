@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public authForm: FormGroup;
-  errorMessage: string;
+  message: string;
   credentials: TokenPayload = {
     username: '',
     email: '',
@@ -48,23 +48,43 @@ export class RegisterComponent implements OnInit {
    * Sinon on affiche l'erreur
    */
   onSubmitForm() {
-    const username = this.authForm.get('username').value;
-    const email = this.authForm.get('email').value;
-    const password = this.authForm.get('password').value;
-    const firstname = this.authForm.get('firstname').value;
-    const lastname = this.authForm.get('lastname').value;
+    if (this.authForm.valid) {
+      const username = this.authForm.get('username').value;
+      const email = this.authForm.get('email').value;
+      const password = this.authForm.get('password').value;
+      const firstname = this.authForm.get('firstname').value;
+      const lastname = this.authForm.get('lastname').value;
 
-    this.credentials.username = username;
-    this.credentials.email = email;
-    this.credentials.password = password;
-    this.credentials.firstname = firstname;
-    this.credentials.lastname = lastname;
+      this.credentials.username = username;
+      this.credentials.email = email;
+      this.credentials.password = password;
+      this.credentials.firstname = firstname;
+      this.credentials.lastname = lastname;
 
-    this.authService.register(this.credentials).subscribe(() => {
-      this.router.navigateByUrl('/dashboard');
-    }, (err) => {
-      console.error(err);
-    });
+      this.authService.register(this.credentials).subscribe(() => {
+        this.message = 'registered';
+        this.authForm.reset();
+      }, (err) => {
+        console.error(err);
+      });
+    } else {
+      this.message = 'error';
+    }
+  }
+
+  /**
+   * Méthode permettant de fermer la fenêtre d'information "Utilisateur créé"
+   */
+  onClose() {
+    this.message = 'none';
+  }
+
+  /**
+   * Méthode permettant de réinitialiser le formulaire
+   */
+  onNew() {
+    this.message = 'none';
+    this.authForm.reset();
   }
 
 }
