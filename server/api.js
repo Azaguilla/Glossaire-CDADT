@@ -17,6 +17,7 @@ mongoose.connect(config.DB, {useNewUrlParser: true}).then(
     const wordRoute = require("./routes/word");
     const ThemeRoute = require("./routes/theme");
     const UserRoute = require("./routes/user");
+    const notificationsRouter = require("./routes/notifications");
 
     const app = express();
     app.use(bodyParser.json());
@@ -29,6 +30,7 @@ mongoose.connect(config.DB, {useNewUrlParser: true}).then(
     app.use("/word", wordRoute);
     app.use("/theme", ThemeRoute);
     app.use("/user", UserRoute);
+    app.use("/api/notifications", notificationsRouter);
 
     const port = process.env.PORT || 4000;
 
