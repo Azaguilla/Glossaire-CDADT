@@ -59,7 +59,7 @@ wordRoutes.route("/add").post(function(req, res) {
   let word = new Word(wordInfo);
 
   word.save().then(definition => {
-    res.status(200).json({'definition': 'Ajout effectué'});
+    res.status(200).json({"definition": "Ajout effectué"});
   })
     .catch(err => {
       res.status(400).send("Sauvegarde non effectuée : " + err);

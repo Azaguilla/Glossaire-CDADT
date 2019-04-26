@@ -20,6 +20,8 @@ import {AuthGuardService} from '../services/auth-guard.service';
 import {MenuAdminComponent} from './menu-admin/menu-admin.component';
 import {MDBRootModule} from 'angular-bootstrap-md';
 import {AddWordComponent} from './word/add-word/add-word.component';
+import { EditWordComponent } from './word/edit-word/edit-word.component';
+import {NewsletterService} from '../services/newsletter.service';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import {AddWordComponent} from './word/add-word/add-word.component';
     DashboardComponent,
     RegisterComponent,
     MenuAdminComponent,
-    AddWordComponent
+    AddWordComponent,
+    EditWordComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {AddWordComponent} from './word/add-word/add-word.component';
   providers: [
     WordService,
     AuthenticationService,
-    AuthGuardService
+    AuthGuardService,
+    NewsletterService
   ],
   bootstrap: [AppComponent]
 })

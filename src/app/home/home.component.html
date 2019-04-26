@@ -57,11 +57,13 @@
 
     <!-- Connexion -->
     <div (click)="onDisplayNone()" class="home-connection">
-      <a *ngIf="!authService.isLoggedIn()" [routerLink]="['connexion']" class="btn">Se connecter</a>
-      <a *ngIf="authService.isLoggedIn()" [routerLink]="['dashboard']" class="btn">Administration</a>
-      <a *ngIf="authService.isLoggedIn()" (click)="authService.logout()" class="btn">Déconnexion</a>
+      <a *ngIf="!isLoggedIn()" [routerLink]="['connexion']" class="btn">Se connecter</a>
+      <a *ngIf="isLoggedIn()" [routerLink]="['dashboard']" class="btn">Administration</a>
+      <a *ngIf="isLoggedIn()" (click)="authService.logout()" class="btn">Déconnexion</a>
     </div>
     <!-- Connexion -->
+
+    <a *ngIf="isLoggedIn()" (click)="subscribeToNotifications()">S'inscrire aux notifications</a>
   </section>
 
 </main>

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import Word from '../models/word.model';
 import {WordService} from '../../services/word.service';
-import {DatePipe, formatDate} from '@angular/common';
 import Theme from '../models/theme.model';
 import {ThemeService} from '../../services/theme.service';
 import {AuthenticationService} from '../../services/authentication.service';
+import {SwPush} from '@angular/service-worker';
+import {NewsletterService} from '../../services/newsletter.service';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,14 @@ export class HomeComponent implements OnInit {
   words: Word[];
   theme: Theme[];
   displayResults: boolean;
+  readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
 
   constructor(private wordService: WordService,
               private themeService: ThemeService,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private swPush: SwPush,
+              private newsletterService: NewsletterService
+  ) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
   }
@@ -80,11 +85,35 @@ export class HomeComponent implements OnInit {
     this.displayResults = false;
   }
 
+  /**
+   * Méthode qui permet d'afficher le résulats de la recherche au clic sur la barre de recherche si celle-ci n'est pas vide
+   */
   onDisplayResult() {
     this.searchValue = (document.getElementById('home-search') as HTMLInputElement).value;
     if (this.searchValue !== null && this.searchValue !== '') {
       this.displayResults = true;
     }
   }
+
+  /**
+   * Méthode permettant de savoir si l'utilisateur est connecté ou non
+   */
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
+  /**
+   * Méthode appelée lorsque l'utilisateur clique sur le bouton "S'abonner aux notifications"
+   * Demande au service web push d'inscrire la personne aux notification en générant une subscription "sub"
+   */
+  subscribeToNotifications() {
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then(
+      sub => this.newsletterService.addPushSubscriber(sub).subscribe()
+    ).catch(err => console.error('Could not subscribe to notifications', err)
+    );
+  }
+
 
 }

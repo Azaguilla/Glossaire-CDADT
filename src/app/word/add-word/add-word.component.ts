@@ -12,7 +12,7 @@ import {WordService} from '../../../services/word.service';
 })
 export class AddWordComponent implements OnInit {
 
-  private wordForm;
+  wordForm;
   message: string;
   themes: Theme[];
 
