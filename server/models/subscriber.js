@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // On défini la collection subscriber qui contient les utilisateurs inscrits aux notifications
-var schema = new mongoose.Schema({
+var schemaSubscriber = new mongoose.Schema({
   endpoint: "string",
   keys: {
     auth: "string",
@@ -11,4 +11,4 @@ var schema = new mongoose.Schema({
   collection: "subscriber",
 });
 
-module.exports = mongoose.model("Subscriber", schema);
+module.exports = mongoose.model("Subscriber", schemaSubscriber);

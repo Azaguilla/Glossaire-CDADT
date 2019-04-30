@@ -43,7 +43,7 @@ import {NewsletterService} from '../services/newsletter.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    ServiceWorkerModule.register('custom-service-worker.js', {enabled: environment.production}),
     ReactiveFormsModule,
     MDBRootModule
   ],

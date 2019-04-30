@@ -4,6 +4,8 @@ import Theme from '../../models/theme.model';
 import {ThemeService} from '../../../services/theme.service';
 import Word from '../../models/word.model';
 import {WordService} from '../../../services/word.service';
+import {NewsletterService} from '../../../services/newsletter.service';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-add-word',
@@ -18,7 +20,9 @@ export class AddWordComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private themeService: ThemeService,
-              private wordService: WordService) {
+              private wordService: WordService,
+              private newsletterService: NewsletterService,
+              private authService: AuthenticationService) {
     this.themeService.getThemes().subscribe((data: Theme[]) => {
       this.themes = data;
     });
@@ -55,6 +59,7 @@ export class AddWordComponent implements OnInit {
       this.message = 'saved';
       this.wordForm.reset();
       this.wordService.addWord(wordInfo);
+      this.newsletterService.send(word, this.authService.getUserDetails().username).subscribe();
     } else {
       this.message = 'error';
     }
