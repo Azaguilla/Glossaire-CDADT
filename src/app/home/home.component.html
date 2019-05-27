@@ -48,7 +48,6 @@
         </p>
         <div class="button-action">
           <a [routerLink]="['definition/', word.title]">Consulter</a>
-          <a href="#">Action</a>
         </div>
       </section>
       <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
@@ -58,12 +57,20 @@
     <!-- Connexion -->
     <div (click)="onDisplayNone()" class="home-connection">
       <a *ngIf="!isLoggedIn()" [routerLink]="['connexion']" class="btn">Se connecter</a>
-      <a *ngIf="isLoggedIn()" [routerLink]="['dashboard']" class="btn">Administration</a>
       <a *ngIf="isLoggedIn()" (click)="authService.logout()" class="btn">Déconnexion</a>
+      <a *ngIf="isLoggedIn()" [routerLink]="['dashboard']" class="btn admin">Administration</a>
     </div>
     <!-- Connexion -->
 
-    <a *ngIf="isLoggedIn()" (click)="subscribeToNotifications()">S'inscrire aux notifications</a>
+    <!-- Notifications -->
+    <section class="home-notification">
+      <header class="home-notification-header">
+        <i class="far fa-bell"></i>
+        <h2>Vous souhaitez être averti de l'arrivée d'une nouvelle définition ?</h2>
+      </header>
+      <a (click)="subscribeToNotifications()">S'abonner aux notifications</a>
+    </section>
+    <!-- Notifications -->
   </section>
 
 </main>
