@@ -6,67 +6,79 @@
   color: lightslategray;
 }
 
-.dashboard-button {
+.dashboard-table {
   display: flex;
   flex-wrap: wrap;
 }
 
-.dashboard-button a {
+.dashboard-table a {
   width: 40%;
   max-width: 135px;
   margin: 1em;
 }
-.dashboard-button a:hover {
+.dashboard-table a:hover {
   text-decoration: none;
 }
 
-.dashboard-button a h1 {
+.dashboard-table a h1 {
   font-size: 1em;
   text-align: center;
   margin: 0.5em 0 0 0 ;
 }
 
-.dashboard-button-waitingdef p,
-.dashboard-button a i {
+.icon-num,
+.dashboard-table a i {
   font-size: 2em;
   padding: 0;
   margin: 0;
 }
 
-.dashboard-button-useradd,
-.dashboard-button-defmanage,
-.dashboard-button-defadd,
-.dashboard-button-waitingdef,
-.dashboard-button-usermanage,
-.dashboard-button-home {
+.dashboard-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding:1em;
   color:white;
+  transition: all 0.2s;
 }
 
-.dashboard-button-useradd {
+.dashboard-button:hover {
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.green-button {
   background: #2db25d;
 }
 
-.dashboard-button-home {
+.violet-button {
   background: darkorchid;
 }
 
-.dashboard-button-defmanage{
+.red-button{
   background: #ff6949;
 }
 
-.dashboard-button-defadd{
+.orange-button{
   background: orange;
 }
 
-.dashboard-button-waitingdef{
+.blue-button{
   background: dodgerblue;
 }
 
-.dashboard-button-usermanage {
+.turquoise-button {
   background: #00bfac;
+}
+
+.oceanblue-button {
+  background: #0056b3;
+}
+
+.pink-button {
+  background: deeppink;
+}
+
+.disabled {
+  background: #a3a3a3;
 }

@@ -1,33 +1,39 @@
 <nav class="menu-admin">
   <ul>
-    <li class="menu-admin-waitingdef">
+    <li class="menu-admin-button blue-button disabled">
       <a [routerLink]="['']">
         6
+        <p>En attente</p>
       </a>
     </li>
-    <li class="menu-admin-defadd">
-      <a [routerLink]="['/mot/ajouter']">
-        <i class="fas fa-plus"></i>
-      </a>
-    </li>
-    <li class="menu-admin-defmanage">
+    <li class="turquoise-button disabled">
       <a [routerLink]="['']">
         <i class="fas fa-edit"></i>
+        <p>Définition</p>
       </a>
     </li>
-    <li class="menu-admin-useradd">
+    <li class="red-button">
       <a [routerLink]="['/utilisateur/ajouter']">
-        <i class="fas fa-user-plus"></i>
-      </a>
-    </li>
-    <li class="menu-admin-usermanage">
-      <a [routerLink]="['']">
         <i class="fas fa-user-edit"></i>
+        <p>Utilisateur</p>
       </a>
     </li>
-    <li class="menu-admin-home">
+    <li class="oceanblue-button disabled">
+      <a [routerLink]="['']">
+        <i class="fas fa-folder-open"></i>
+        <p>Thème</p>
+      </a>
+    </li>
+    <li class="pale-pink-button">
+      <a [routerLink]="['/dashboard']">
+        <i class="fas fa-cog"></i>
+        <p>Admin</p>
+      </a>
+    </li>
+    <li class="violet-button">
       <a [routerLink]="['']">
         <i class="fas fa-sign-out-alt"></i>
+        <p>Accueil</p>
       </a>
     </li>
   </ul>

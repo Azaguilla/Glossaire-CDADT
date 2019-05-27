@@ -21,43 +21,65 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
+  flex-basis: 100%;
 }
 
 .menu-admin a {
   color: white;
   text-decoration: none;
-  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
-.menu-admin-useradd {
+.green-button {
   background: #2db25d;
 }
 
-.menu-admin-home {
+.violet-button {
   background: darkorchid;
 }
 
-.menu-admin-defmanage{
+.red-button{
   background: #ff6949;
 }
 
-.menu-admin-defadd{
+.orange-button{
   background: orange;
 }
 
-.menu-admin-waitingdef{
+.blue-button{
   background: dodgerblue;
-  font-weight:500;
 }
 
-.menu-admin-usermanage {
+.turquoise-button {
   background: #00bfac;
 }
 
-.menu-admin-waitingdef {
+.oceanblue-button {
+  background: #0056b3;
+}
+
+.pale-pink-button {
+  background: rgb(255, 163, 194);
+}
+
+.disabled {
+  background: #a3a3a3;
+}
+
+.menu-admin-button p {
   padding : 0;
+  top: -0.30em;
+  position: relative;
+}
+
+.menu-admin a p{
+  font-size: 0.7em;
   margin: 0;
+}
+
+.menu-admin a i {
+  margin-bottom: 0.15em;
 }
