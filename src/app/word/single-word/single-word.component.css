@@ -1,7 +1,7 @@
 .single-word-page-header{
   display: flex;
   justify-content: center;
-  margin: 1.5em 0;
+  padding: 6em 0 1.5em 0;
   color: #7e7e7e;
 }
 
