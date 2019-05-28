@@ -104,10 +104,6 @@ form {
   padding: 0.5rem;
 }
 
-div label {
-  display:none;
-}
-
 section.authentication-form-group {
   border-top: solid 2px #ced4da;
   margin-top: 1em;
@@ -151,4 +147,8 @@ section.authentication-form-group h1 {
 .message-success i {
   padding:1rem;
   cursor: pointer;
+}
+
+div label {
+  margin: 0.5em 0 0 0;
 }
