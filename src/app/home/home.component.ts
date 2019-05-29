@@ -103,17 +103,78 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Méthode permettant de fermer la fenêtre d'information "Abonnement effectué" ou "Abonnement rejeté"
+   */
+  onClose() {
+    // On affiche le message de réussite
+    const elem = document.getElementsByClassName('message');
+
+    Array.prototype.forEach.call(elem, function(e) {
+      e.animate([
+        // keyframes
+        {top: '0'},
+        {top: '-100%'}
+      ], {
+        // timing options
+        duration: 300,
+        fill: 'forwards'
+      });
+    });
+  }
+
+
+  /**
    * Méthode appelée lorsque l'utilisateur clique sur le bouton "S'abonner aux notifications"
    * Demande au service web push d'inscrire la personne aux notification en générant une subscription "sub"
    */
   subscribeToNotifications() {
+
+    // On inscrit la personne
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     }).then(
-      sub => this.newsletterService.addPushSubscriber(sub).subscribe()
-    ).catch(err => console.error('Could not subscribe to notifications', err)
+      sub => this.subscriptionSuccessful(sub)
+    ).catch(err => this.displayError()
     );
   }
 
+  /**
+   * Méthode permettant d'afficher le message d'erreur lors d'une tentative d'abonnement qui aurait échoué
+   */
+  displayError() {
+    // On affiche le message de réussite
+    const elem = document.getElementById('message-error');
+    elem.animate([
+      // keyframes
+      {top: '-100%'},
+      {top: '0'}
+    ], {
+      // timing options
+      duration: 300,
+      fill: 'forwards'
+    });
+  }
+
+  /**
+   * Méthode permettant d'afficher le message de succès lors d'une tentative d'abonnement qui aurait réussi
+   * Puis envoie la subscription pour enregistrement dans la Base de données
+   * @param sub L'objet subscription
+   */
+  subscriptionSuccessful(sub) {
+
+    // On affiche le message de réussite
+    const elem = document.getElementById('message-success');
+    elem.animate([
+      // keyframes
+      {top: '-100%'},
+      {top: '0'}
+    ], {
+      // timing options
+      duration: 300,
+      fill: 'forwards'
+    });
+
+    this.newsletterService.addPushSubscriber(sub).subscribe();
+  }
 
 }

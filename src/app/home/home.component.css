@@ -144,6 +144,30 @@
   font-size:0.8em;
 }
 
+/******************************/
+
+.message {
+  width: 100%;
+  font-weight: 400;
+  padding: 0.7em;
+  position: fixed;
+  z-index: 3;
+  top: -100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-success {
+  background: #d4ffda;
+  color: #2db25d;
+}
+
+.message-error {
+  background: #ffe9db;
+  color: #ff6949;
+}
+
 /*****************************/
 
 .home-search-results i {
