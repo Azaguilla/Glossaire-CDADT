@@ -36,12 +36,12 @@ newsletterRoutes.route("/").post(cors(corsOptions), async function(req, res) {
       "notification": {
         "title": "Une définition vient d'être ajoutée : " + title + ".",
         "body": "La définition du mot " + title + " vient d'être ajoutée par " + user + ".",
-        "icon": "assets/img/logo_v4.png",
+        "icon": "assets/img/logo_carre.png",
         "vibrate": [100, 50, 100],
         "data": {
           "dateOfArrival": Date.now(),
           "primaryKey": 1,
-          "url": "http://127.0.0.1:8080/definition/" + title,
+          "url": "https://rambof.alwaysdata.net/definition/" + title,
         },
         "actions": [{
           "action": "explore",

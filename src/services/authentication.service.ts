@@ -31,7 +31,7 @@ export interface TokenPayload {
 export class AuthenticationService {
 
   private token: string;
-  uri = 'http://localhost:4000';
+  uri = 'https://azaguilla.alwaysdata.net';
 
   constructor(private http: HttpClient, private router: Router) {
   }
