@@ -9,6 +9,7 @@
 .dashboard-table {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .dashboard-table a {
