@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class NewsletterService {
 
-  uri = 'https://azaguilla.alwaysdata.net';
-
+  // uri = 'https://azaguilla.alwaysdata.net';
+  uri = 'http://localhost:4000';
   constructor(private http: HttpClient) {
 
   }
@@ -18,6 +18,17 @@ export class NewsletterService {
    */
   addPushSubscriber(sub: any) {
     return this.http.post<any>(`${this.uri}/api/notifications`, sub);
+  }
+
+  /**
+   * Méthode permettant de supprimer une subscription
+   * @param endpoint Le endpoint de l'objet subscription
+   */
+  deletePushSubscriber(endpoint: any) {
+    const sub = {
+      endpoint
+    };
+    return this.http.post<any>(`${this.uri}/api/notifications/del`, sub);
   }
 
   /**

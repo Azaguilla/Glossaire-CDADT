@@ -25,4 +25,12 @@ notificationRoutes.route("/").post(cors(corsOptions), function(req, res) {
       res.status(400).send("Un problème est survenu : " + err);
     });
 });
+
+notificationRoutes.route("/del").post(function(req, res) {
+  Subscriber.findOne(req.body).remove().exec(function(err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
 module.exports = notificationRoutes;

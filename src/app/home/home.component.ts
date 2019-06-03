@@ -20,6 +20,9 @@ export class HomeComponent implements OnInit {
   words: Word[];
   theme: Theme[];
   displayResults: boolean;
+  isSubscriber: boolean;
+  private subscription;
+
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
 
   constructor(private wordService: WordService,
@@ -36,11 +39,15 @@ export class HomeComponent implements OnInit {
    * Fonction appelée à l'initialisation du composant
    * Récupère la dernière définition ajoutée
    */
-  ngOnInit() {
+  async ngOnInit() {
     this.wordService.getLastWord().subscribe((data: Word[]) => {
       this.word = data[0];
       this.ilya = this.wordService.getTimeIlya(this.word.last_edit);
     });
+
+    // vérifie si le navigateur est inscrit aux notifications
+    await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
+      pushSubscription => this.isSubscribe(pushSubscription));
   }
 
   /**
@@ -96,6 +103,24 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Méthode permettant d'afficher le message d'erreur lors d'une tentative d'abonnement qui aurait échoué
+   */
+  displayError() {
+    // On affiche le message de réussite
+    const elem = document.getElementById('message-error');
+    elem.animate([
+      // keyframes
+      {top: '-100%'},
+      {top: '0'}
+    ], {
+      // timing options
+      duration: 300,
+      fill: 'forwards'
+    });
+  }
+
+
+  /**
    * Méthode permettant de savoir si l'utilisateur est connecté ou non
    */
   isLoggedIn() {
@@ -122,6 +147,18 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Méthode qui teste si l'abonnement existe ou non. En fonction du résultat, sera affiché un bouton "S'abonner" ou "Se désabonner"
+   * @param pushSubscription Objet subscription
+   */
+  isSubscribe(pushSubscription) {
+    if (pushSubscription === null) {
+      this.isSubscriber = false;
+    } else {
+      this.subscription = pushSubscription.endpoint;
+      this.isSubscriber = true;
+    }
+  }
 
   /**
    * Méthode appelée lorsque l'utilisateur clique sur le bouton "S'abonner aux notifications"
@@ -139,20 +176,15 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Méthode permettant d'afficher le message d'erreur lors d'une tentative d'abonnement qui aurait échoué
+   * Méthode permettant de désinscrire le naviagteur aux notifications. Puis on utilise la fonction unsubscriptionSuccessful
+   * pour supprimer l'entrée concernant l'abonnement dans la Base de Données
    */
-  displayError() {
-    // On affiche le message de réussite
-    const elem = document.getElementById('message-error');
-    elem.animate([
-      // keyframes
-      {top: '-100%'},
-      {top: '0'}
-    ], {
-      // timing options
-      duration: 300,
-      fill: 'forwards'
-    });
+  unsubscribeToNotifications() {
+
+    // On désinscrit la personne
+    this.swPush.unsubscribe()
+      .then(success => this.unsubscriptionSuccessful())
+      .catch(err => console.log(err));
   }
 
   /**
@@ -174,7 +206,18 @@ export class HomeComponent implements OnInit {
       fill: 'forwards'
     });
 
+    // On indique à la page que la personne s'est abonnée et on lui renseigne le endpoint si jamais la personne souhaite
+    // se désabonner. Puis on l'inscrit dans la Base de Données
+    this.isSubscriber = true;
+    this.subscription = sub.endpoint;
     this.newsletterService.addPushSubscriber(sub).subscribe();
   }
 
+  /**
+   * Méthode permettant de supprimer l'entrée d'une personne abonnée dans la Base de Données
+   */
+  unsubscriptionSuccessful() {
+    this.isSubscriber = false;
+    this.newsletterService.deletePushSubscriber(this.subscription).subscribe();
+  }
 }
