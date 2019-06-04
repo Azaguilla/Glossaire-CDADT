@@ -27,10 +27,10 @@ notificationRoutes.route("/").post(cors(corsOptions), function(req, res) {
 });
 
 notificationRoutes.route("/del").post(function(req, res) {
-  Subscriber.findOne(req.body).remove().exec(function(err) {
-    if (err) {
-      console.log(err);
-    }
+  Subscriber.findOne(req.body).remove().exec().then( success => {
+    res.status(200).json({"subscriber": "Subscriber supprimé"});
+  }).catch(err => {
+    res.status(400).send("Un problème est survenu : " + err);
   });
 });
 module.exports = notificationRoutes;
