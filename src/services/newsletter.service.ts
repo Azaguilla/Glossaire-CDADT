@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class NewsletterService {
 
-  // uri = 'https://azaguilla.alwaysdata.net';
-  uri = 'http://localhost:4000';
+  uri = 'https://azaguilla.alwaysdata.net';
+  // uri = 'http://localhost:4000';
   constructor(private http: HttpClient) {
 
   }

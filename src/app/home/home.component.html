@@ -77,13 +77,11 @@
         <i class="far fa-bell"></i>
         <h2>Vous souhaitez être averti de l'arrivée d'une nouvelle définition ?</h2>
       </header>
-      <div *ngIf="!isSubscriber" (click)="subscribeToNotifications()" class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="subscription" [checked]="isSubscriber">
-        <label class="custom-control-label">S'abonner aux notifications</label>
-      </div>
-      <div *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="unsubscription" [checked]="isSubscriber">
-        <label class="custom-control-label">S'abonner aux notifications</label>
+      <div class="custom-control custom-checkbox">
+        <input *ngIf="!isSubscriber" (click)="subscribeToNotifications()" type="checkbox" class="custom-control-input" id="subscription" [checked]="isSubscriber">
+        <a *ngIf="!isSubscriber" (click)="subscribeToNotifications()" class="custom-control-label">S'abonner aux notifications</a>
+        <input *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" type="checkbox" class="custom-control-input" id="unsubscription" [checked]="isSubscriber">
+        <a *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" class="custom-control-label">S'abonner aux notifications</a>
       </div>
     </section>
     <!-- Notifications -->

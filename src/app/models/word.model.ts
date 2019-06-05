@@ -3,8 +3,10 @@ export default class Word {
   title: string;
   last_edit: number;
   definition: string;
-  themes: [];
-  themes_words: [];
+  themes: [{
+    _id: any;
+    title: string;
+  }];
   know_more: string;
 
   constructor() {

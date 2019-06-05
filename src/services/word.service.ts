@@ -8,7 +8,7 @@ import {formatDate} from '@angular/common';
 export class WordService {
 
   uri = 'https://azaguilla.alwaysdata.net';
-
+  // uri = 'http://localhost:4000';
   constructor(private http: HttpClient) {
   }
 

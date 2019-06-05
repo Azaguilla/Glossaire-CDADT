@@ -6,7 +6,10 @@ var schemaWord = new mongoose.Schema({
   definition: "string",
   know_more: "string",
   last_edit: "string",
-  themes: [Schema.Types.ObjectId],
+  themes: [{
+    _id: Schema.Types.ObjectId,
+    title: "string",
+  }],
   title: "string",
 }, {
   collection: "word",

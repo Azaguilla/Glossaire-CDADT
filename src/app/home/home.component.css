@@ -141,7 +141,11 @@
 }
 
 .home-notification a {
-  font-size:0.8em;
+  cursor: pointer;
+}
+
+.home-notification .custom-checkbox{
+  display: flex;
 }
 
 /******************************/
