@@ -56,3 +56,21 @@ section:last-child .list-word-def-header {
 .block {
   max-height: 100em;
 }
+
+.list-word-def-content a {
+  color: orange;
+  padding:1em 0;
+}
+
+.list-word-def-content span {
+  margin-left: 0.75em;
+}
+
+.list-word-def-content i {
+  transition: all 0.2s;
+}
+
+.list-word-def-content a:hover i {
+  margin-right: -0.35em;
+  margin-left: 0.35em;
+}
