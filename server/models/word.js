@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 var schemaWord = new mongoose.Schema({
   definition: "string",
   know_more: "string",
-  last_edit: "string",
+  last_edit: "Date",
   themes: [{
     _id: Schema.Types.ObjectId,
     title: "string",

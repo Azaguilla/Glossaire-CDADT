@@ -59,7 +59,7 @@
           <a [routerLink]="['definition/', word.title]">Consulter</a>
         </div>
       </section>
-      <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
+      <p *ngIf="word" class="home-last-definition-content-date">{{ word.last_edit | timeago:live }}</p>
     </section>
     <!-- Dernières défintions ajoutées -->
 

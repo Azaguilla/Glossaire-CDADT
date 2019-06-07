@@ -20,9 +20,13 @@ import {AuthGuardService} from '../services/auth-guard.service';
 import {MenuAdminComponent} from './menu-admin/menu-admin.component';
 import {MDBRootModule} from 'angular-bootstrap-md';
 import {AddWordComponent} from './word/add-word/add-word.component';
-import { EditWordComponent } from './word/edit-word/edit-word.component';
+import {EditWordComponent} from './word/edit-word/edit-word.component';
 import {NewsletterService} from '../services/newsletter.service';
+import {TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter} from 'ngx-timeago';
 
+export class MyIntl extends TimeagoIntl {
+// do extra stuff here...
+}
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import {NewsletterService} from '../services/newsletter.service';
     HttpClientModule,
     ServiceWorkerModule.register('custom-service-worker.js', {enabled: environment.production}),
     ReactiveFormsModule,
-    MDBRootModule
+    MDBRootModule,
+    TimeagoModule.forRoot({
+      intl: { provide: TimeagoIntl, useClass: MyIntl },
+      formatter: { provide: TimeagoFormatter, useClass: TimeagoCustomFormatter },
+    })
   ],
   providers: [
     WordService,

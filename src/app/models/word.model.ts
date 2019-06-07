@@ -1,7 +1,7 @@
 export default class Word {
   _id: any;
   title: string;
-  last_edit: number;
+  last_edit: Date;
   definition: string;
   themes: [{
     _id: any;

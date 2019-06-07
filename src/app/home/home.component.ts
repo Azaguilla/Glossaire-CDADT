@@ -6,6 +6,8 @@ import {ThemeService} from '../../services/theme.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import {SwPush} from '@angular/service-worker';
 import {NewsletterService} from '../../services/newsletter.service';
+import {TimeagoIntl} from 'ngx-timeago';
+import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +17,6 @@ import {NewsletterService} from '../../services/newsletter.service';
 export class HomeComponent implements OnInit {
 
   word: Word;
-  ilya: string;
   private searchValue: string;
   words: Word[];
   theme: Theme[];
@@ -24,15 +25,21 @@ export class HomeComponent implements OnInit {
   private subscription;
 
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
+  live: true;
 
   constructor(private wordService: WordService,
               private themeService: ThemeService,
               private authService: AuthenticationService,
               private swPush: SwPush,
-              private newsletterService: NewsletterService
+              private newsletterService: NewsletterService,
+              intl: TimeagoIntl
   ) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
+
+    // Les fichiers de langue pour le module Ilya(Timeago)
+    intl.strings = FrenchStrings;
+    intl.changes.next();
   }
 
   /**
@@ -42,7 +49,6 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     this.wordService.getLastWord().subscribe((data: Word[]) => {
       this.word = data[0];
-      this.ilya = this.wordService.getTimeIlya(this.word.last_edit);
     });
 
     // vérifie si le navigateur est inscrit aux notifications

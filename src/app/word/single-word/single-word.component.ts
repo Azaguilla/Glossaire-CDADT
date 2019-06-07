@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {WordService} from '../../../services/word.service';
 import Word from '../../models/word.model';
 import {ActivatedRoute} from '@angular/router';
+import { TimeagoIntl } from 'ngx-timeago';
+import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
 
 @Component({
   selector: 'app-single-word',
@@ -11,18 +13,21 @@ import {ActivatedRoute} from '@angular/router';
 export class SingleWordComponent implements OnInit {
 
   constructor(private wordService: WordService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              intl: TimeagoIntl) {
+    // Les fichiers de langue pour le module Ilya(Timeago)
+    intl.strings = FrenchStrings;
+    intl.changes.next();
   }
 
   word: Word;
-  ilya: string;
   open: boolean;
+  live: true;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.wordService.getWordByTitle(params.title).subscribe((data: Word[]) => {
         this.word = data[0];
-        this.ilya = this.wordService.getTimeIlya(this.word.last_edit);
         this.open = false;
       });
     });
