@@ -23,6 +23,7 @@ import {AddWordComponent} from './word/add-word/add-word.component';
 import {EditWordComponent} from './word/edit-word/edit-word.component';
 import {NewsletterService} from '../services/newsletter.service';
 import {TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter} from 'ngx-timeago';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 export class MyIntl extends TimeagoIntl {
 // do extra stuff here...
@@ -45,6 +46,7 @@ export class MyIntl extends TimeagoIntl {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('custom-service-worker.js', {enabled: environment.production}),

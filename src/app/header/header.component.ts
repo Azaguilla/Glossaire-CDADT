@@ -4,9 +4,40 @@ import Word from '../models/word.model';
 import Theme from '../models/theme.model';
 import {ThemeService} from '../../services/theme.service';
 import {AuthenticationService} from '../../services/authentication.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-header',
+  animations: [
+    trigger('overlayDisplay', [
+      state('open', style({
+        opacity: '1',
+      })),
+      state('closed', style({
+        opacity: '0',
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
+    ]),
+    trigger('menuDisplay', [
+      state('open', style({
+        left: '30vw',
+      })),
+      state('closed', style({
+        left: '-100%',
+      })),
+      transition('open => closed', [
+        animate('0.3s')
+      ]),
+      transition('closed => open', [
+        animate('0.3s')
+      ]),
+    ]),
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -16,12 +47,16 @@ export class HeaderComponent implements OnInit {
   word: Word[];
   theme: Theme[];
   displayResults: boolean;
+  isDisplayOverlayMenu: boolean;
+  isMenuOpen: boolean;
 
   constructor(private wordService: WordService,
               private themeService: ThemeService,
               private authService: AuthenticationService) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
+    this.isDisplayOverlayMenu = false;
+    this.isMenuOpen = false;
   }
 
   ngOnInit() {
@@ -78,7 +113,7 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * Affiche le menu burger
+   * Méthode permettant d'ouvrir le menu burger ou le fermer
    */
   onDisplayMenu() {
     const elem = document.getElementById('header-menu-burger');
@@ -88,44 +123,20 @@ export class HeaderComponent implements OnInit {
       elem.className = 'header-menu-burger';
 
       overlay.style.display = 'none';
-
-      // On affiche le menu
-      elem.animate([
-        // keyframes
-        {left: '30vw'},
-        {left: '-100%'}
-      ], {
-        // timing options
-        duration: 300,
-        fill: 'forwards'
-      });
+      this.isMenuOpen = false;
     } else {
       elem.className = 'header-menu-burger open';
 
       overlay.style.display = 'block';
 
-      overlay.animate([
-        // keyframes
-        {opacity: '0'},
-        {opacity: '1'}
-      ], {
-        // timing options
-        duration: 150,
-        fill: 'forwards'
-      });
-
-      elem.animate([
-        // keyframes
-        {left: '-100%'},
-        {left: '30vw'}
-      ], {
-        // timing options
-        duration: 300,
-        fill: 'forwards'
-      });
+      this.isDisplayOverlayMenu = true;
+      this.isMenuOpen = true;
     }
   }
 
+  /**
+   * Méthode qui ferme le menu
+   */
   onDisplayMenuNone() {
     const elem = document.getElementById('header-menu-burger');
     const overlay = document.getElementById('overlay-menu');
@@ -135,16 +146,7 @@ export class HeaderComponent implements OnInit {
 
       overlay.style.display = 'none';
 
-      // On affiche le menu
-      elem.animate([
-        // keyframes
-        {left: '30vw'},
-        {left: '-100%'}
-      ], {
-        // timing options
-        duration: 300,
-        fill: 'forwards'
-      });
+      this.isMenuOpen = false;
     }
 
   }

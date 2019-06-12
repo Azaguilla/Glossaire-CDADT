@@ -3,10 +3,10 @@
   <section id="home">
 
     <!-- Message d'info -->
-    <p id="message-success" class="message message-success">
+    <p [@openClose]="isOpenSuccess ? 'open' : 'closed'" id="message-success" class="message message-success">
       Vous vous êtes abonné(e) avec succès ! <i (click)="onClose()" class="fas fa-times"></i>
     </p>
-    <p id="message-error" class="message message-error">
+    <p [@openClose]="isOpenError ? 'open' : 'closed'" id="message-error" class="message message-error">
       Vous n'avez pas pu vous abonner :( <i (click)="onClose()" class="fas fa-times"></i>
     </p>
     <!-- Message d'info -->

@@ -8,9 +8,26 @@ import {SwPush} from '@angular/service-worker';
 import {NewsletterService} from '../../services/newsletter.service';
 import {TimeagoIntl} from 'ngx-timeago';
 import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
+  animations: [
+    trigger('openClose', [
+      state('open', style({
+        top: '0',
+      })),
+      state('closed', style({
+        top: '-100%',
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
+    ]),
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -23,6 +40,8 @@ export class HomeComponent implements OnInit {
   displayResults: boolean;
   isSubscriber: boolean;
   private subscription;
+  isOpenSuccess: boolean;
+  isOpenError: boolean;
 
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
   live: true;
@@ -36,6 +55,10 @@ export class HomeComponent implements OnInit {
   ) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
+
+    // Les messages d'erreur sont masqués par défaut
+    this.isOpenSuccess = false;
+    this.isOpenError = false;
 
     // Les fichiers de langue pour le module Ilya(Timeago)
     intl.strings = FrenchStrings;
@@ -111,18 +134,9 @@ export class HomeComponent implements OnInit {
   /**
    * Méthode permettant d'afficher le message d'erreur lors d'une tentative d'abonnement qui aurait échoué
    */
-  displayError() {
-    // On affiche le message de réussite
-    const elem = document.getElementById('message-error');
-    elem.animate([
-      // keyframes
-      {top: '-100%'},
-      {top: '0'}
-    ], {
-      // timing options
-      duration: 300,
-      fill: 'forwards'
-    });
+  displayError(err) {
+    console.log(err);
+    this.isOpenError = true;
   }
 
 
@@ -137,20 +151,9 @@ export class HomeComponent implements OnInit {
    * Méthode permettant de fermer la fenêtre d'information "Abonnement effectué" ou "Abonnement rejeté"
    */
   onClose() {
+    this.isOpenSuccess = false;
+    this.isOpenError = false;
     // On affiche le message de réussite
-    const elem = document.getElementsByClassName('message');
-
-    Array.prototype.forEach.call(elem, function(e) {
-      e.animate([
-        // keyframes
-        {top: '0'},
-        {top: '-100%'}
-      ], {
-        // timing options
-        duration: 300,
-        fill: 'forwards'
-      });
-    });
   }
 
   /**
@@ -177,7 +180,7 @@ export class HomeComponent implements OnInit {
       serverPublicKey: this.VAPID_PUBLIC_KEY
     }).then(
       sub => this.subscriptionSuccessful(sub)
-    , err => this.displayError()
+    , err => this.displayError(err)
     );
   }
 
@@ -206,16 +209,7 @@ export class HomeComponent implements OnInit {
   subscriptionSuccessful(sub) {
 
     // On affiche le message de réussite
-    const elem = document.getElementById('message-success');
-    elem.animate([
-      // keyframes
-      {top: '-100%'},
-      {top: '0'}
-    ], {
-      // timing options
-      duration: 300,
-      fill: 'forwards'
-    });
+    this.isOpenSuccess = true;
 
     // On indique à la page que la personne s'est abonnée et on lui renseigne le endpoint si jamais la personne souhaite
     // se désabonner. Puis on l'inscrit dans la Base de Données
