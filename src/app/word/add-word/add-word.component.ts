@@ -67,7 +67,7 @@ export class AddWordComponent implements OnInit {
       this.message = 'saved';
       this.wordForm.reset();
       this.wordService.addWord(wordInfo);
-      // this.newsletterService.send(word, this.authService.getUserDetails().username).subscribe();
+      this.newsletterService.send(word, this.authService.getUserDetails().username).subscribe();
     } else {
       this.message = 'error';
     }

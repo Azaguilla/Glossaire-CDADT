@@ -177,7 +177,7 @@ export class HomeComponent implements OnInit {
       serverPublicKey: this.VAPID_PUBLIC_KEY
     }).then(
       sub => this.subscriptionSuccessful(sub)
-    ).catch(err => this.displayError()
+    , err => this.displayError()
     );
   }
 
@@ -185,12 +185,17 @@ export class HomeComponent implements OnInit {
    * Méthode permettant de désinscrire le naviagteur aux notifications. Puis on utilise la fonction unsubscriptionSuccessful
    * pour supprimer l'entrée concernant l'abonnement dans la Base de Données
    */
-  unsubscribeToNotifications() {
+  async unsubscribeToNotifications() {
 
     // On désinscrit la personne
-    this.swPush.unsubscribe()
-      .then(success => this.unsubscriptionSuccessful())
-      .catch(err => console.log(err));
+    await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
+      pushSubscription => pushSubscription.unsubscribe()).then(
+      success => this.unsubscriptionSuccessful()
+    );
+
+    // this.swPush.unsubscribe()
+    //   .then(success => this.unsubscriptionSuccessful(),
+    //     err => console.log(err));
   }
 
   /**
