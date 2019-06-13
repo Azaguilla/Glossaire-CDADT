@@ -23,5 +23,25 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+        "/word",
+        "/word/**",
+        "/word/search/**",
+        "/word/thm//**",
+        "/theme",
+        "/theme/**",
+        "/theme/word/**",
+        "/theme/search/**"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 200,
+        "maxAge": "1d"
+      }
+    }
   ]
 }
