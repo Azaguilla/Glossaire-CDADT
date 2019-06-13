@@ -28,7 +28,6 @@
     {
       "name": "api-performance",
       "urls": [
-        "/word",
         "/word/**",
         "/word/search/**",
         "/word/thm//**",
@@ -41,6 +40,18 @@
         "strategy": "performance",
         "maxSize": 200,
         "maxAge": "1d"
+      }
+    },
+    {
+      "name": "api-freshness",
+      "urls": [
+        "/word"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "1d",
+        "timeout": "10s"
       }
     }
   ]
