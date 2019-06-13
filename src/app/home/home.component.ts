@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
   private subscription;
   isOpenSuccess: boolean;
   isOpenError: boolean;
+  notification: boolean;
 
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
   live: true;
@@ -74,9 +75,19 @@ export class HomeComponent implements OnInit {
       this.word = data[0];
     });
 
-    // vérifie si le navigateur est inscrit aux notifications
-    await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
-      pushSubscription => this.isSubscribe(pushSubscription));
+    // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
+    // notifications et enfin si le navigateur est inscrit aux notifications
+    if (window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
+      this.notification = false;
+    } else {
+      if (('Notification' in window)) {
+        this.notification = true;
+        await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
+          pushSubscription => this.isSubscribe(pushSubscription)).catch(err => console.log(err));
+      } else {
+        this.notification = false;
+      }
+    }
   }
 
   /**
