@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
   isDisplayOverlayMenu: boolean;
   isMenuOpen: boolean;
 
-  isSubscriber: boolean;
+  isSubscriber: string;
   private subscription;
   notification: boolean;
 
@@ -192,10 +192,10 @@ export class HeaderComponent implements OnInit {
    */
   isSubscribe(pushSubscription) {
     if (pushSubscription === null) {
-      this.isSubscriber = false;
+      this.isSubscriber = 'false';
     } else {
       this.subscription = pushSubscription.endpoint;
-      this.isSubscriber = true;
+      this.isSubscriber = 'true';
     }
   }
 
@@ -204,7 +204,7 @@ export class HeaderComponent implements OnInit {
    * Demande au service web push d'inscrire la personne aux notification en générant une subscription "sub"
    */
   subscribeToNotifications() {
-
+    this.isSubscriber = 'loading';
     // On inscrit la personne
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
@@ -236,7 +236,7 @@ export class HeaderComponent implements OnInit {
 
     // On indique à la page que la personne s'est abonnée et on lui renseigne le endpoint si jamais la personne souhaite
     // se désabonner. Puis on l'inscrit dans la Base de Données
-    this.isSubscriber = true;
+    this.isSubscriber = 'true';
     this.subscription = sub.endpoint;
     this.newsletterService.addPushSubscriber(sub).subscribe();
   }
@@ -245,7 +245,7 @@ export class HeaderComponent implements OnInit {
    * Méthode permettant de supprimer l'entrée d'une personne abonnée dans la Base de Données
    */
   unsubscriptionSuccessful() {
-    this.isSubscriber = false;
+    this.isSubscriber = 'false';
     this.newsletterService.deletePushSubscriber(this.subscription).subscribe();
   }
 }
