@@ -54,9 +54,19 @@
         <div>
           <i class="far fa-bell"></i><span>Notifications</span>
         </div>
-        <a class="disabled">
-          <span>Se désabonner</span><i class="fas fa-toggle-on"></i>
-        </a>
+        <div *ngIf="notification">
+          <a *ngIf="!isSubscriber" (click)="subscribeToNotifications()" class="header-menu-notification-toggle">
+            <span>S'abonner</span>
+            <i class="fas fa-toggle-off"></i>
+          </a>
+          <a *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" class="header-menu-notification-toggle">
+            <span>S'abonner</span>
+            <i class="fas fa-toggle-on"></i>
+          </a>
+        </div>
+        <span class="header-menu-notification-toggle" *ngIf="!notification">
+          Les notifications ne sont pas disponibles sur ce navigateur.
+        </span>
       </li>
     </ul>
   </nav>
