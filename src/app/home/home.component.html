@@ -3,10 +3,10 @@
   <section id="home">
 
     <!-- Message d'info -->
-    <p id="message-success" class="message message-success">
+    <p [@openClose]="isOpenSuccess ? 'open' : 'closed'" id="message-success" class="message message-success">
       Vous vous êtes abonné(e) avec succès ! <i (click)="onClose()" class="fas fa-times"></i>
     </p>
-    <p id="message-error" class="message message-error">
+    <p [@openClose]="isOpenError ? 'open' : 'closed'" id="message-error" class="message message-error">
       Vous n'avez pas pu vous abonner :( <i (click)="onClose()" class="fas fa-times"></i>
     </p>
     <!-- Message d'info -->
@@ -59,7 +59,7 @@
           <a [routerLink]="['definition/', word.title]">Consulter</a>
         </div>
       </section>
-      <p *ngIf="ilya" class="home-last-definition-content-date">{{ ilya }}</p>
+      <p *ngIf="word" class="home-last-definition-content-date">{{ word.last_edit | timeago:live }}</p>
     </section>
     <!-- Dernières défintions ajoutées -->
 
@@ -77,13 +77,14 @@
         <i class="far fa-bell"></i>
         <h2>Vous souhaitez être averti de l'arrivée d'une nouvelle définition ?</h2>
       </header>
-      <div *ngIf="!isSubscriber" (click)="subscribeToNotifications()" class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="subscription" [checked]="isSubscriber">
-        <label class="custom-control-label">S'abonner aux notifications</label>
+      <div *ngIf="notification" class="custom-control custom-checkbox">
+        <input *ngIf="!isSubscriber" (click)="subscribeToNotifications()" type="checkbox" class="custom-control-input" id="subscription" [checked]="isSubscriber">
+        <a *ngIf="!isSubscriber" (click)="subscribeToNotifications()" class="custom-control-label">S'abonner aux notifications</a>
+        <input *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" type="checkbox" class="custom-control-input" id="unsubscription" [checked]="isSubscriber">
+        <a *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" class="custom-control-label">S'abonner aux notifications</a>
       </div>
-      <div *ngIf="isSubscriber" (click)="unsubscribeToNotifications()" class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="unsubscription" [checked]="isSubscriber">
-        <label class="custom-control-label">S'abonner aux notifications</label>
+      <div *ngIf="!notification" class="font-weight-bold text-center">
+        Les notifications ne sont pas disponibles sur ce navigateur. Si vous souhaitez bénéficier de cette fonctionnalité, veuillez essayer un autre navigateur (Chrome, FireFox, Samsung Internet...).
       </div>
     </section>
     <!-- Notifications -->

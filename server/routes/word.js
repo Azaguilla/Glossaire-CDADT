@@ -20,8 +20,7 @@ wordRoutes.route("/").get(function(req, res) {
 wordRoutes.route("/:title").get(function(req, res) {
   let title = req.params.title;
 
-  Word.aggregate([{$lookup: {from: "theme", localField: "themes", foreignField: "_id", as: "themes_words"}},
-    {$match: {"title": title}}]).exec(function(err, word) {
+  Word.find({"title": title}).exec(function(err, word) {
     if (err) {
       console.log(err);
     } else {
@@ -44,8 +43,7 @@ wordRoutes.route("/search/:title").get(function(req, res) {
 wordRoutes.route("/thm/:title").get(function(req, res) {
   let title = req.params.title;
 
-  Word.aggregate([{$lookup: {from: "theme", localField: "themes", foreignField: "_id", as: "themes_words"}},
-    {$match: {"themes_words.title": title}}]).exec(function(err, word) {
+  Word.find({"themes.title": title}).sort({"title": 1}).exec(function(err, word) {
     if (err) {
       console.log(err);
     } else {

@@ -32,7 +32,7 @@ export class AuthenticationService {
 
   private token: string;
   uri = 'https://azaguilla.alwaysdata.net';
-
+  // uri = 'http://localhost:4000';
   constructor(private http: HttpClient, private router: Router) {
   }
 
@@ -87,7 +87,7 @@ export class AuthenticationService {
    * Utilisée pour empêcher la duplication de code
    * Cette méthode effectue une requête en fonction de la méthode et du type de demande effectuée
    * @param method Requête HTTP (get ou post)
-   * @param type   Le nom de l'ction (login, register)
+   * @param type   Le nom de l'action (login, register)
    * @param user   L'utilisateur authentifié
    */
   private request(method: 'post' | 'get', type: 'login' | 'register' | 'profile', user?: TokenPayload): Observable<any> {

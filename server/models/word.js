@@ -5,8 +5,11 @@ const Schema = mongoose.Schema;
 var schemaWord = new mongoose.Schema({
   definition: "string",
   know_more: "string",
-  last_edit: "string",
-  themes: [Schema.Types.ObjectId],
+  last_edit: "Date",
+  themes: [{
+    _id: Schema.Types.ObjectId,
+    title: "string",
+  }],
   title: "string",
 }, {
   collection: "word",

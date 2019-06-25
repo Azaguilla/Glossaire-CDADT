@@ -1,28 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnlineOfflineService {
 
-  private internalConnectionChanged = new Subject<boolean>();
+  private isOnline = new Subject<boolean>();
 
   constructor() {
-    window.addEventListener('online', () => this.updateOnlineStatus);
-    window.addEventListener('offline', () => this.updateOnlineStatus);
+    const online = fromEvent(window, 'online');
+    online.subscribe(
+        () => { this.updateOnlineStatus(); },
+        (error) => {console.log('Erreur bordel :' + error); },
+        () => {console.log('Ok terminé'); }
+    );
+
+    // On place un observer sur l'evenement OFFLINE du navigateur
+    const offline = fromEvent(window, 'offline');
+    offline.subscribe(
+        () => { this.updateOnlineStatus(); },
+        (error) => {console.log('Erreur bordel :' + error); },
+        () => {console.log('Ok terminé'); }
+    );
   }
 
-  get connectionChanged() {
-    return this.internalConnectionChanged.asObservable();
-  }
-
-  get isOnline() {
-    return !!window.navigator.onLine;
+  public getIsOnline() {
+    return this.isOnline.asObservable();
   }
 
   private updateOnlineStatus() {
-    this.internalConnectionChanged.next(window.navigator.onLine);
+    this.isOnline.next(window.navigator.onLine);
   }
-
 }

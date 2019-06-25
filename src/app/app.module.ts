@@ -20,9 +20,18 @@ import {AuthGuardService} from '../services/auth-guard.service';
 import {MenuAdminComponent} from './menu-admin/menu-admin.component';
 import {MDBRootModule} from 'angular-bootstrap-md';
 import {AddWordComponent} from './word/add-word/add-word.component';
-import { EditWordComponent } from './word/edit-word/edit-word.component';
+import {EditWordComponent} from './word/edit-word/edit-word.component';
 import {NewsletterService} from '../services/newsletter.service';
+import {TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter} from 'ngx-timeago';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import {SyncService} from '../services/sync.service';
+import {OnlineOfflineService} from '../services/online-offline.service';
+import {IndexedDbService} from '../services/indexed-db.service';
 
+export class MyIntl extends TimeagoIntl {
+// do extra stuff here...
+}
 
 @NgModule({
   declarations: [
@@ -41,17 +50,27 @@ import {NewsletterService} from '../services/newsletter.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('custom-service-worker.js', {enabled: environment.production}),
     ReactiveFormsModule,
-    MDBRootModule
+    MDBRootModule,
+    TimeagoModule.forRoot({
+      intl: { provide: TimeagoIntl, useClass: MyIntl },
+      formatter: { provide: TimeagoFormatter, useClass: TimeagoCustomFormatter },
+    }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     WordService,
     AuthenticationService,
     AuthGuardService,
-    NewsletterService
+    NewsletterService,
+    SyncService,
+    OnlineOfflineService,
+    IndexedDbService
   ],
   bootstrap: [AppComponent]
 })

@@ -23,5 +23,36 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+        "/word/**",
+        "/word/search/**",
+        "/word/thm//**",
+        "/theme",
+        "/theme/**",
+        "/theme/word/**",
+        "/theme/search/**"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 200,
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "api-freshness",
+      "urls": [
+        "/word"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "1d",
+        "timeout": "10s"
+      }
+    }
   ]
 }

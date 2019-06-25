@@ -32,7 +32,7 @@
   <div (click)="onDisplayNone()" id="overlay"
        [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}"></div>
 
-  <nav id="header-menu-burger" class="header-menu-burger">
+  <nav [@menuDisplay]="isMenuOpen ? 'open' : 'closed'" id="header-menu-burger" class="header-menu-burger">
     <ul>
       <li>
         <a *ngIf="isLoggedIn()" (click)="authService.logout()" >
@@ -60,5 +60,5 @@
       </li>
     </ul>
   </nav>
-  <div (click)="onDisplayMenu()" id="overlay-menu"></div>
+  <div [@overlayDisplay]="isDisplayOverlayMenu ? 'open' : 'closed'" (click)="onDisplayMenu()" id="overlay-menu"></div>
 </header>

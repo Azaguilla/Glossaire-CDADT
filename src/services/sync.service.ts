@@ -2,15 +2,22 @@ import { Injectable } from '@angular/core';
 import {OnlineOfflineService} from './online-offline.service';
 import {IndexedDbService} from './indexed-db.service';
 import {HttpClient} from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SyncService {
 
+  private isOnline: boolean = navigator.onLine;
+
   constructor(private http: HttpClient,
               private readonly onlineOfflineService: OnlineOfflineService,
-              private indexedDBService: IndexedDbService) {
+              private indexedDBService: IndexedDbService,
+              private toastr: ToastrService) {
+    if (this.isOnline) {
+      this.indexedDBService.sendStockedQueries();
+    }
     this.checkBackOnline();
   }
 
@@ -19,11 +26,9 @@ export class SyncService {
    * @param query: la requête à ajouter.
    */
   public howToAdd(query: any) {
-    if(this.onlineOfflineService.isOnline) {
-      console.log('Connexion ok');
+    if (this.isOnline) {
       this.addOnline(query);
     } else {
-      console.log('Connexion ko');
       this.addOffline(query);
     }
   }
@@ -33,8 +38,8 @@ export class SyncService {
    * @param query: la requête à ajouter à l'indexedDb.
    */
   private addOffline(query: any) {
+    this.toastr.warning('La requête sera envoyée ultérieurement', 'Mode hors ligne');
     this.indexedDBService.addToIndexedDb(query);
-    console.log('Ajout de la requête dans l\indexedDb (syncService)');
   }
 
   /**
@@ -42,15 +47,19 @@ export class SyncService {
    * @param query: la requête à envoyer.
    */
   private addOnline(query: any) {
-    console.log('Envoi de la requête (syncService)', query);
-    console.log(this.http.post(query.url, query.params).subscribe(res => console.log('Done')));
+    this.toastr.success('La requête à bien été envoyée');
+    this.http.post(query.url, query.params);
   }
 
   private checkBackOnline() {
-    this.onlineOfflineService.connectionChanged.subscribe(online => {
+    this.onlineOfflineService.getIsOnline().subscribe(online => {
       if (online) {
-        this.indexedDBService.commitStockedQueries();
-        console.log('Connexion récupérée');
+        this.toastr.success('En ligne', 'Etat de la connexion', {timeOut: 3000});
+        this.isOnline = true;
+        this.indexedDBService.sendStockedQueries();
+      } else {
+        this.toastr.error('Hors ligne', 'Etat de la connexion');
+        this.isOnline = false;
       }
     });
   }
