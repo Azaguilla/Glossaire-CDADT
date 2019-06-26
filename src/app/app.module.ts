@@ -24,6 +24,7 @@ import {EditWordComponent} from './word/edit-word/edit-word.component';
 import {NewsletterService} from '../services/newsletter.service';
 import {TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter} from 'ngx-timeago';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SearchService} from '../services/search.service';
 
 export class MyIntl extends TimeagoIntl {
 // do extra stuff here...
@@ -61,7 +62,8 @@ export class MyIntl extends TimeagoIntl {
     WordService,
     AuthenticationService,
     AuthGuardService,
-    NewsletterService
+    NewsletterService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

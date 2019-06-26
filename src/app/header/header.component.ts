@@ -7,8 +7,10 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SwPush} from '@angular/service-worker';
 import {NewsletterService} from '../../services/newsletter.service';
-import {TimeagoIntl} from 'ngx-timeago';
-import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
+import {FormControl} from '@angular/forms';
+import 'rxjs-compat/add/operator/distinctUntilChanged';
+import 'rxjs-compat/add/operator/debounceTime';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -47,7 +49,6 @@ import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
 })
 export class HeaderComponent implements OnInit {
 
-  private searchValue: string;
   word: Word[];
   theme: Theme[];
   displayResults: boolean;
@@ -60,11 +61,15 @@ export class HeaderComponent implements OnInit {
 
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
 
+  queryField: FormControl = new FormControl ();
+
   constructor(private wordService: WordService,
               private themeService: ThemeService,
               private authService: AuthenticationService,
               private swPush: SwPush,
-              private newsletterService: NewsletterService,) {
+              private newsletterService: NewsletterService,
+              private searchService: SearchService,
+              ) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
     this.displayResults = false;
     this.isDisplayOverlayMenu = false;
@@ -80,6 +85,34 @@ export class HeaderComponent implements OnInit {
     elem.style.height = `${winHeight - header}px`;
 
 
+    /** Détecte les changements dans le formulaire de recherche et effectue la recherche sur les mots et les thèmes
+     */
+    this.queryField.valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe (queryField => {
+
+        // On affiche l'overlay et le résultat
+        this.displayResults = true;
+
+        // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
+        this.word = null;
+        this.theme = null;
+
+        // On fait appel au service pour récupérer les mots correspondants à la recherche
+        this.wordService.getWordsLikeByTitle(queryField).subscribe((data: Word[]) => {
+          const dataSorted = this.searchService.sortSearchTable(data, queryField);
+          this.word = dataSorted.slice(0, 4);
+        });
+
+        // On fait appel au service pour récupérer les thèmes correspondants à la recherche
+        this.themeService.getThemesLikeByTitle(queryField).subscribe((data: Theme[]) => {
+          const dataSorted = this.searchService.sortSearchTable(data, queryField);
+          this.theme = dataSorted.slice(0, 2);
+        });
+      });
+
+
     // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
     // notifications et enfin si le navigateur est inscrit aux notifications
     if (window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
@@ -93,31 +126,7 @@ export class HeaderComponent implements OnInit {
         this.notification = false;
       }
     }
-  }
 
-  /**
-   * Méthode qui effectue une recherche sur les mots et les thèmes
-   */
-  onSearch() {
-    // On affiche l'overlay et le résultat
-    this.displayResults = true;
-
-    // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
-    this.word = null;
-    this.theme = null;
-
-    // On récupère la valeur de la recherche
-    this.searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
-
-    // On fait appel au service pour récupérer les mots correspondants à la recherche
-    this.wordService.getWordsLikeByTitle(this.searchValue).subscribe((data: Word[]) => {
-      this.word = data;
-    });
-
-    // On fait appel au service pour récupérer les thèmes correspondants à la recherche
-    this.themeService.getThemesLikeByTitle(this.searchValue).subscribe((data: Theme[]) => {
-      this.theme = data;
-    });
   }
 
   /**
@@ -133,8 +142,8 @@ export class HeaderComponent implements OnInit {
    * si le résultat n'est pas vide
    */
   onDisplayResult() {
-    this.searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
-    if (this.searchValue !== null && this.searchValue !== '') {
+    const searchValue = (document.getElementById('header-menu-search') as HTMLInputElement).value;
+    if (searchValue !== null && searchValue !== '') {
       this.displayResults = true;
     }
   }

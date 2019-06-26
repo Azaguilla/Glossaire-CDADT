@@ -31,7 +31,7 @@ wordRoutes.route("/:title").get(function(req, res) {
 
 wordRoutes.route("/search/:title").get(function(req, res) {
   let title = req.params.title.toLowerCase().trim();
-  Word.find({"title":  { $regex: title, $options: "i" }}).limit(4).exec(function(err, word) {
+  Word.find({"title":  { $regex: title, $options: "i" }}).sort({"title": 1}).exec(function(err, word) {
     if (err) {
       console.log(err);
     } else {

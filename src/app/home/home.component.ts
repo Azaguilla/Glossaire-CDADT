@@ -9,6 +9,10 @@ import {NewsletterService} from '../../services/newsletter.service';
 import {TimeagoIntl} from 'ngx-timeago';
 import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {FormControl} from '@angular/forms';
+import 'rxjs-compat/add/operator/distinctUntilChanged';
+import 'rxjs-compat/add/operator/debounceTime';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +38,6 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class HomeComponent implements OnInit {
 
   word: Word;
-  private searchValue: string;
   words: Word[];
   theme: Theme[];
   displayResults: boolean;
@@ -47,11 +50,14 @@ export class HomeComponent implements OnInit {
   readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
   live: true;
 
+  queryField: FormControl = new FormControl ();
+
   constructor(private wordService: WordService,
               private themeService: ThemeService,
               private authService: AuthenticationService,
               private swPush: SwPush,
               private newsletterService: NewsletterService,
+              private searchService: SearchService,
               intl: TimeagoIntl
   ) {
     // L'overlay et le résultat de la recherche ne sont pas affichés par défaut
@@ -75,6 +81,46 @@ export class HomeComponent implements OnInit {
       this.word = data[0];
     });
 
+    /** Détecte les changements dans le formulaire de recherche et effectue la recherche sur les mots et les thèmes
+     */
+    this.queryField.valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe (queryField => {
+        // On affiche l'overlay et le résultat
+        this.displayResults = true;
+
+        // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
+        this.words = null;
+        this.theme = null;
+
+        // ****** Positionne les résultats de la recherche en fonction de l'input ****** //
+        // On récupère le champ de recherche
+        const inputSearch = (document.getElementById('home-search') as HTMLInputElement);
+
+        // On position les résultats en fonction de l'input
+        const inputOffsetLeft = inputSearch.offsetLeft;
+        const heightInputSearch = inputSearch.offsetHeight;
+        const inputOffsetTop = heightInputSearch + inputSearch.offsetTop + 5;
+
+        const divResults = (document.getElementById('home-search-results') as HTMLInputElement);
+        divResults.style.top = inputOffsetTop + 'px';
+        divResults.style.left = inputOffsetLeft + 'px';
+        // ****** Positionne les résultats de la recherche en fonction de l'input ****** //
+
+        // On fait appel au service pour récupérer les mots correspondants à la recherche
+        this.wordService.getWordsLikeByTitle(queryField).subscribe((data: Word[]) => {
+          const dataSorted = this.searchService.sortSearchTable(data, queryField);
+          this.words = dataSorted.slice(0, 4);
+        });
+
+        // On fait appel au service pour récupérer les thèmes correspondants à la recherche
+        this.themeService.getThemesLikeByTitle(queryField).subscribe((data: Theme[]) => {
+          const dataSorted = this.searchService.sortSearchTable(data, queryField);
+          this.theme = dataSorted.slice(0, 2);
+        });
+      });
+
     // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
     // notifications et enfin si le navigateur est inscrit aux notifications
     if (window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
@@ -91,41 +137,6 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Méthode qui effectue une recherche sur les mots et les thèmes
-   */
-  onSearch() {
-    // On affiche l'overlay et le résultat
-    this.displayResults = true;
-
-    // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
-    this.words = null;
-    this.theme = null;
-
-    // On récupère la valeur de la recherche
-    const inputSearch = (document.getElementById('home-search') as HTMLInputElement);
-    this.searchValue = inputSearch.value;
-
-    // On position les résultats en fonction de l'input
-    const inputOffsetLeft = inputSearch.offsetLeft;
-    const heightInputSearch = inputSearch.offsetHeight;
-    const inputOffsetTop = heightInputSearch + inputSearch.offsetTop + 5;
-
-    const divResults = (document.getElementById('home-search-results') as HTMLInputElement);
-    divResults.style.top = inputOffsetTop + 'px';
-    divResults.style.left = inputOffsetLeft + 'px';
-
-    // On fait appel au service pour récupérer les mots correspondants à la recherche
-    this.wordService.getWordsLikeByTitle(this.searchValue).subscribe((data: Word[]) => {
-      this.words = data;
-    });
-
-    // On fait appel au service pour récupérer les thèmes correspondants à la recherche
-    this.themeService.getThemesLikeByTitle(this.searchValue).subscribe((data: Theme[]) => {
-      this.theme = data;
-    });
-  }
-
-  /**
    * Méthode permettant d'avertir s'il faut afficher ou non l'overlay  et le résultat de la recherche
    */
   onDisplayNone() {
@@ -136,8 +147,7 @@ export class HomeComponent implements OnInit {
    * Méthode qui permet d'afficher le résulats de la recherche au clic sur la barre de recherche si celle-ci n'est pas vide
    */
   onDisplayResult() {
-    this.searchValue = (document.getElementById('home-search') as HTMLInputElement).value;
-    if (this.searchValue !== null && this.searchValue !== '') {
+    if (this.queryField.value !== null && this.queryField.value !== '') {
       this.displayResults = true;
     }
   }
@@ -206,10 +216,6 @@ export class HomeComponent implements OnInit {
       pushSubscription => pushSubscription.unsubscribe()).then(
       success => this.unsubscriptionSuccessful()
     );
-
-    // this.swPush.unsubscribe()
-    //   .then(success => this.unsubscriptionSuccessful(),
-    //     err => console.log(err));
   }
 
   /**

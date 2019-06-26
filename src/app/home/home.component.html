@@ -21,7 +21,9 @@
     <!-- Zone de recherche -->
     <div class="home-search-area">
       <div class="home-search-center">
-        <input id="home-search" (focusin)="onDisplayResult()" (input)="onSearch();"
+        <input id="home-search"
+               (focusin)="onDisplayResult()"
+               [formControl]="queryField"
                type="search"
                placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
         <div id="home-search-results" class="home-search-results"

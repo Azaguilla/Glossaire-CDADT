@@ -44,7 +44,7 @@ themeRoutes.route("/word/:id").get(function(req, res) {
 
 themeRoutes.route("/search/:title").get(function(req, res) {
   let title = req.params.title.toLowerCase().trim();
-  Theme.find({"title":  { $regex: title, $options: "i" }}).limit(2).exec(function(err, theme) {
+  Theme.find({"title":  { $regex: title, $options: "i" }}).sort({"title": 1}).exec(function(err, theme) {
     if (err) {
       console.log(err);
     } else {
