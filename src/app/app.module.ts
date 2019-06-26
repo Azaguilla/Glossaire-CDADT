@@ -25,6 +25,10 @@ import {NewsletterService} from '../services/newsletter.service';
 import {TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter} from 'ngx-timeago';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SearchService} from '../services/search.service';
+import { ToastrModule } from 'ngx-toastr';
+import {SyncService} from '../services/sync.service';
+import {OnlineOfflineService} from '../services/online-offline.service';
+import {IndexedDbService} from '../services/indexed-db.service';
 
 export class MyIntl extends TimeagoIntl {
 // do extra stuff here...
@@ -56,12 +60,18 @@ export class MyIntl extends TimeagoIntl {
     TimeagoModule.forRoot({
       intl: { provide: TimeagoIntl, useClass: MyIntl },
       formatter: { provide: TimeagoFormatter, useClass: TimeagoCustomFormatter },
-    })
+    }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     WordService,
     AuthenticationService,
     AuthGuardService,
+    NewsletterService,
+    SyncService,
+    OnlineOfflineService,
+    IndexedDbService,
     NewsletterService,
     SearchService
   ],

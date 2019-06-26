@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {formatDate} from '@angular/common';
+import {SyncService} from './sync.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ import {formatDate} from '@angular/common';
 export class WordService {
 
   uri = 'https://azaguilla.alwaysdata.net';
-  // uri = 'http://localhost:4000';
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient, private syncService: SyncService) {
   }
 
   /**
@@ -49,6 +50,6 @@ export class WordService {
    * @param wordInfo La liste des infos du mot
    */
   addWord(wordInfo) {
-    this.http.post(`${this.uri}/word/add`, wordInfo).subscribe(res => console.log('Done'));
+    this.syncService.howToAdd({url: `${this.uri}/word/add`, params: wordInfo});
   }
 }

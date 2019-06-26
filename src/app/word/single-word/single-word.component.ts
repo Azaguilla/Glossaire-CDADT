@@ -12,24 +12,25 @@ import {strings as FrenchStrings} from 'ngx-timeago/language-strings/fr';
 })
 export class SingleWordComponent implements OnInit {
 
+  db: any;
+    word: Word;
+    open: boolean;
+    live: true;
+
   constructor(private wordService: WordService,
               private route: ActivatedRoute,
               intl: TimeagoIntl) {
-    // Les fichiers de langue pour le module Ilya(Timeago)
-    intl.strings = FrenchStrings;
-    intl.changes.next();
+      // Les fichiers de langue pour le module Ilya(Timeago)
+      intl.strings = FrenchStrings;
+      intl.changes.next();
   }
 
-  word: Word;
-  open: boolean;
-  live: true;
-
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.wordService.getWordByTitle(params.title).subscribe((data: Word[]) => {
-        this.word = data[0];
-        this.open = false;
-      });
+   this.route.params.subscribe(params => {
+        this.wordService.getWordByTitle(params.title).subscribe((data: Word[]) => {
+            this.word = data[0];
+            this.open = false;
+        });
     });
   }
 
