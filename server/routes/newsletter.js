@@ -41,7 +41,7 @@ newsletterRoutes.route("/").post(cors(corsOptions), async function(req, res) {
         "data": {
           "dateOfArrival": Date.now(),
           "primaryKey": 1,
-          "url": "https://rambof.alwaysdata.net/definition/" + title,
+          "url": "https://glossaire.alwaysdata.net/definition/" + title,
         },
         "actions": [{
           "action": "explore",
