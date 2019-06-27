@@ -38,8 +38,6 @@ import {SearchService} from '../../services/search.service';
 export class HomeComponent implements OnInit {
 
   word: Word;
-  words: Word[];
-  theme: Theme[];
   displayResults: boolean;
   isSubscriber: boolean;
   private subscription;
@@ -90,10 +88,6 @@ export class HomeComponent implements OnInit {
         // On affiche l'overlay et le résultat
         this.displayResults = true;
 
-        // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
-        this.words = null;
-        this.theme = null;
-
         // ****** Positionne les résultats de la recherche en fonction de l'input ****** //
         // On récupère le champ de recherche
         const inputSearch = (document.getElementById('home-search') as HTMLInputElement);
@@ -108,17 +102,7 @@ export class HomeComponent implements OnInit {
         divResults.style.left = inputOffsetLeft + 'px';
         // ****** Positionne les résultats de la recherche en fonction de l'input ****** //
 
-        // On fait appel au service pour récupérer les mots correspondants à la recherche
-        this.wordService.getWordsLikeByTitle(queryField).subscribe((data: Word[]) => {
-          const dataSorted = this.searchService.sortSearchTable(data, queryField);
-          this.words = dataSorted.slice(0, 4);
-        });
-
-        // On fait appel au service pour récupérer les thèmes correspondants à la recherche
-        this.themeService.getThemesLikeByTitle(queryField).subscribe((data: Theme[]) => {
-          const dataSorted = this.searchService.sortSearchTable(data, queryField);
-          this.theme = dataSorted.slice(0, 2);
-        });
+        this.searchService.search(queryField);
       });
 
     // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
@@ -174,7 +158,6 @@ export class HomeComponent implements OnInit {
   onClose() {
     this.isOpenSuccess = false;
     this.isOpenError = false;
-    // On affiche le message de réussite
   }
 
   /**

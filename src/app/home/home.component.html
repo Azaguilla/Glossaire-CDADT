@@ -28,12 +28,12 @@
                placeholder="Rechercher un mot, un thème..."><i class="fas fa-search"></i>
         <div id="home-search-results" class="home-search-results"
              [ngClass]="{'d-block': displayResults === true, 'd-none': displayResults === false}">
-          <div *ngFor="let def of words">
+          <div *ngFor="let def of searchService.getWords()">
             <a (click)="onDisplayNone()" [routerLink]="['definition/', def.title]">
               <i class="fas fa-search"></i>{{ def.title }}
             </a>
           </div>
-          <div *ngFor="let thm of theme">
+          <div *ngFor="let thm of searchService.getThemes()">
             <a [routerLink]="['theme/', thm.title]" (click)="onDisplayNone()">
               <i class="fas fa-search"></i>{{ thm.title }} <span class="home-search-theme"> en tant que thème </span>
             </a>

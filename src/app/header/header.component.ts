@@ -49,8 +49,6 @@ import {SearchService} from '../../services/search.service';
 })
 export class HeaderComponent implements OnInit {
 
-  word: Word[];
-  theme: Theme[];
   displayResults: boolean;
   isDisplayOverlayMenu: boolean;
   isMenuOpen: boolean;
@@ -91,25 +89,10 @@ export class HeaderComponent implements OnInit {
       .debounceTime(300)
       .distinctUntilChanged()
       .subscribe (queryField => {
-
         // On affiche l'overlay et le résultat
         this.displayResults = true;
 
-        // On initialise les résultats à null pour qu'il ne garde pas la dernière recherche en mémoire (reste affichée sinon)
-        this.word = null;
-        this.theme = null;
-
-        // On fait appel au service pour récupérer les mots correspondants à la recherche
-        this.wordService.getWordsLikeByTitle(queryField).subscribe((data: Word[]) => {
-          const dataSorted = this.searchService.sortSearchTable(data, queryField);
-          this.word = dataSorted.slice(0, 4);
-        });
-
-        // On fait appel au service pour récupérer les thèmes correspondants à la recherche
-        this.themeService.getThemesLikeByTitle(queryField).subscribe((data: Theme[]) => {
-          const dataSorted = this.searchService.sortSearchTable(data, queryField);
-          this.theme = dataSorted.slice(0, 2);
-        });
+        this.searchService.search(queryField);
       });
 
 
