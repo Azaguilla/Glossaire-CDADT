@@ -47,8 +47,9 @@ export class SyncService {
    * @param query: la requête à envoyer.
    */
   private addOnline(query: any) {
-    this.toastr.success('La requête à bien été envoyée');
+    console.log(query);
     this.http.post(query.url, query.params).subscribe();
+    this.toastr.success('La requête à bien été envoyée');
   }
 
   private checkBackOnline() {
