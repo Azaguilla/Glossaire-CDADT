@@ -52,13 +52,6 @@ export class HeaderComponent implements OnInit {
   displayResults: boolean;
   isDisplayOverlayMenu: boolean;
   isMenuOpen: boolean;
-
-  isSubscriber: string;
-  private subscription;
-  notification: boolean;
-
-  readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
-
   queryField: FormControl = new FormControl ();
 
   constructor(private wordService: WordService,
@@ -74,7 +67,7 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = false;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     // Fixe une taille minimum au menu
     const winHeight = window.innerHeight;
     const elem = document.getElementById('header-menu-burger');
@@ -95,21 +88,8 @@ export class HeaderComponent implements OnInit {
         this.searchService.search(queryField);
       });
 
-
-    // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
-    // notifications et enfin si le navigateur est inscrit aux notifications
-    if (window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
-      this.notification = false;
-    } else {
-      if (('Notification' in window)) {
-        this.notification = true;
-        await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
-          pushSubscription => this.isSubscribe(pushSubscription)).catch(err => console.log(err));
-      } else {
-        this.notification = false;
-      }
-    }
-
+    // On vérifie la compatibilité du navigateur aux notifications
+    this.newsletterService.isBrowserCompatibleToNotif();
   }
 
   /**
@@ -179,65 +159,33 @@ export class HeaderComponent implements OnInit {
 
   // ********************************************************************** NOTIFICATIONS
   /**
-   * Méthode qui teste si l'abonnement existe ou non. En fonction du résultat, sera affiché un bouton "S'abonner" ou "Se désabonner"
-   * @param pushSubscription Objet subscription
-   */
-  isSubscribe(pushSubscription) {
-    if (pushSubscription === null) {
-      this.isSubscriber = 'false';
-    } else {
-      this.subscription = pushSubscription.endpoint;
-      this.isSubscriber = 'true';
-    }
-  }
-
-  /**
    * Méthode appelée lorsque l'utilisateur clique sur le bouton "S'abonner aux notifications"
-   * Demande au service web push d'inscrire la personne aux notification en générant une subscription "sub"
    */
   subscribeToNotifications() {
-    this.isSubscriber = 'loading';
-    // On inscrit la personne
-    this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then(
-      sub => this.subscriptionSuccessful(sub)
-      , err => console.log(err)
-    );
+    this.newsletterService.subscribeToNotifications();
   }
 
   /**
    * Méthode permettant de désinscrire le naviagteur aux notifications. Puis on utilise la fonction unsubscriptionSuccessful
    * pour supprimer l'entrée concernant l'abonnement dans la Base de Données
    */
-  async unsubscribeToNotifications() {
-
-    // On désinscrit la personne
-    await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
-      pushSubscription => pushSubscription.unsubscribe()).then(
-      success => this.unsubscriptionSuccessful()
-    );
+  unsubscribeToNotifications() {
+    this.newsletterService.unsubscribeToNotifications();
   }
 
-  /**
-   * Méthode permettant d'afficher le message de succès lors d'une tentative d'abonnement qui aurait réussi
-   * Puis envoie la subscription pour enregistrement dans la Base de données
-   * @param sub L'objet subscription
-   */
-  subscriptionSuccessful(sub) {
-
-    // On indique à la page que la personne s'est abonnée et on lui renseigne le endpoint si jamais la personne souhaite
-    // se désabonner. Puis on l'inscrit dans la Base de Données
-    this.isSubscriber = 'true';
-    this.subscription = sub.endpoint;
-    this.newsletterService.addPushSubscriber(sub).subscribe();
+  getIsSubscriber() {
+    return this.newsletterService.getIsSubscriber();
   }
 
-  /**
-   * Méthode permettant de supprimer l'entrée d'une personne abonnée dans la Base de Données
-   */
-  unsubscriptionSuccessful() {
-    this.isSubscriber = 'false';
-    this.newsletterService.deletePushSubscriber(this.subscription).subscribe();
+  getNotification() {
+    return this.newsletterService.getNotification();
+  }
+
+  getWords() {
+    return this.searchService.getWords();
+  }
+
+  getThemes() {
+    return this.searchService.getThemes();
   }
 }

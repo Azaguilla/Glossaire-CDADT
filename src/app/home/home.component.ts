@@ -39,15 +39,9 @@ export class HomeComponent implements OnInit {
 
   word: Word;
   displayResults: boolean;
-  isSubscriber: boolean;
-  private subscription;
   isOpenSuccess: boolean;
   isOpenError: boolean;
-  notification: boolean;
-
-  readonly VAPID_PUBLIC_KEY = 'BNGmdT-zn-S0tocFwPP9Z6PG3pfouwebPHQ0lpAQg5Z5LLZJ4OdBXz8aN_ct19Bbvi56WeYosu94RCXS34D2NU0';
   live: true;
-
   queryField: FormControl = new FormControl ();
 
   constructor(private wordService: WordService,
@@ -74,7 +68,7 @@ export class HomeComponent implements OnInit {
    * Fonction appelée à l'initialisation du composant
    * Récupère la dernière définition ajoutée
    */
-  async ngOnInit() {
+  ngOnInit() {
     this.wordService.getLastWord().subscribe((data: Word[]) => {
       this.word = data[0];
     });
@@ -84,7 +78,7 @@ export class HomeComponent implements OnInit {
     this.queryField.valueChanges
       .debounceTime(300)
       .distinctUntilChanged()
-      .subscribe (queryField => {
+      .subscribe(queryField => {
         // On affiche l'overlay et le résultat
         this.displayResults = true;
 
@@ -105,25 +99,14 @@ export class HomeComponent implements OnInit {
         this.searchService.search(queryField);
       });
 
-    // vérifie si le navigateur n'est pas Safari, si c'est le cas, vérifie que le navigateur supporte les
-    // notifications et enfin si le navigateur est inscrit aux notifications
-    if (window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
-      this.notification = false;
-    } else {
-      if (('Notification' in window)) {
-        this.notification = true;
-        await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
-          pushSubscription => this.isSubscribe(pushSubscription)).catch(err => console.log(err));
-      } else {
-        this.notification = false;
-      }
-    }
+    // On vérifie la compatibilité du navigateur aux notifications
+    this.newsletterService.isBrowserCompatibleToNotif();
   }
 
   /**
    * Méthode permettant d'avertir s'il faut afficher ou non l'overlay  et le résultat de la recherche
    */
-  onDisplayNone() {
+  onDisplayResultsNone() {
     this.displayResults = false;
   }
 
@@ -135,15 +118,6 @@ export class HomeComponent implements OnInit {
       this.displayResults = true;
     }
   }
-
-  /**
-   * Méthode permettant d'afficher le message d'erreur lors d'une tentative d'abonnement qui aurait échoué
-   */
-  displayError(err) {
-    console.log(err);
-    this.isOpenError = true;
-  }
-
 
   /**
    * Méthode permettant de savoir si l'utilisateur est connecté ou non
@@ -159,70 +133,42 @@ export class HomeComponent implements OnInit {
     this.isOpenSuccess = false;
     this.isOpenError = false;
   }
-
-  /**
-   * Méthode qui teste si l'abonnement existe ou non. En fonction du résultat, sera affiché un bouton "S'abonner" ou "Se désabonner"
-   * @param pushSubscription Objet subscription
-   */
-  isSubscribe(pushSubscription) {
-    if (pushSubscription === null) {
-      this.isSubscriber = false;
-    } else {
-      this.subscription = pushSubscription.endpoint;
-      this.isSubscriber = true;
-    }
-  }
+// ********************************************************************** NOTIFICATIONS
 
   /**
    * Méthode appelée lorsque l'utilisateur clique sur le bouton "S'abonner aux notifications"
-   * Demande au service web push d'inscrire la personne aux notification en générant une subscription "sub"
    */
   subscribeToNotifications() {
-
-    // On inscrit la personne
-    this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then(
-      sub => this.subscriptionSuccessful(sub)
-    , err => this.displayError(err)
-    );
+    this.newsletterService.subscribeToNotifications();
+    if (this.newsletterService.getErrorWhenSubscribe()) {
+      this.isOpenError = true;
+    } else {
+      this.isOpenSuccess = true;
+    }
   }
 
   /**
    * Méthode permettant de désinscrire le naviagteur aux notifications. Puis on utilise la fonction unsubscriptionSuccessful
    * pour supprimer l'entrée concernant l'abonnement dans la Base de Données
    */
-  async unsubscribeToNotifications() {
-
-    // On désinscrit la personne
-    await (await navigator.serviceWorker.getRegistration()).pushManager.getSubscription().then(
-      pushSubscription => pushSubscription.unsubscribe()).then(
-      success => this.unsubscriptionSuccessful()
-    );
+  unsubscribeToNotifications() {
+    this.newsletterService.unsubscribeToNotifications();
   }
 
-  /**
-   * Méthode permettant d'afficher le message de succès lors d'une tentative d'abonnement qui aurait réussi
-   * Puis envoie la subscription pour enregistrement dans la Base de données
-   * @param sub L'objet subscription
-   */
-  subscriptionSuccessful(sub) {
-
-    // On affiche le message de réussite
-    this.isOpenSuccess = true;
-
-    // On indique à la page que la personne s'est abonnée et on lui renseigne le endpoint si jamais la personne souhaite
-    // se désabonner. Puis on l'inscrit dans la Base de Données
-    this.isSubscriber = true;
-    this.subscription = sub.endpoint;
-    this.newsletterService.addPushSubscriber(sub).subscribe();
+  getIsSubscriber() {
+    return this.newsletterService.getIsSubscriber();
   }
 
-  /**
-   * Méthode permettant de supprimer l'entrée d'une personne abonnée dans la Base de Données
-   */
-  unsubscriptionSuccessful() {
-    this.isSubscriber = false;
-    this.newsletterService.deletePushSubscriber(this.subscription).subscribe();
+  getNotification() {
+    return this.newsletterService.getNotification();
   }
+
+  getWords() {
+    return this.searchService.getWords();
+  }
+
+  getThemes() {
+    return this.searchService.getThemes();
+  }
+
 }

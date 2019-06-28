@@ -9,6 +9,7 @@ import {SyncService} from './sync.service';
 export class WordService {
 
   uri = 'https://azaguilla.alwaysdata.net';
+  // uri = 'http://localhost:4000';
 
   constructor(private http: HttpClient, private syncService: SyncService) {
   }
