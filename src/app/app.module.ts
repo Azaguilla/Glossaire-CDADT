@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {SyncService} from '../services/sync.service';
 import {OnlineOfflineService} from '../services/online-offline.service';
 import {IndexedDbService} from '../services/indexed-db.service';
+import {OcrService} from '../services/ocr.service';
 
 export class MyIntl extends TimeagoIntl {
 // do extra stuff here...
@@ -70,7 +71,9 @@ export class MyIntl extends TimeagoIntl {
     NewsletterService,
     SyncService,
     OnlineOfflineService,
-    IndexedDbService
+    IndexedDbService,
+    NewsletterService,
+    OcrService
   ],
   bootstrap: [AppComponent]
 })
