@@ -15,7 +15,7 @@ export class OcrService {
   public readImage(myImage: any) {
     this.worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png', 'eng')
         .progress(progress => {
-        console.log('progress', progress);
+        console.log('progress', progress.progress);
       }).then(result => {
         console.log('result', result.text);
     });

@@ -3,7 +3,6 @@ import {OnlineOfflineService} from './online-offline.service';
 import {IndexedDbService} from './indexed-db.service';
 import {HttpClient} from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import {OcrService} from "./ocr.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,7 @@ export class SyncService {
   constructor(private http: HttpClient,
               private readonly onlineOfflineService: OnlineOfflineService,
               private indexedDBService: IndexedDbService,
-              private toastr: ToastrService,
-              private ocrService: OcrService) {
+              private toastr: ToastrService) {
     if (this.isOnline) {
       this.indexedDBService.sendStockedQueries();
     }
@@ -50,7 +48,7 @@ export class SyncService {
    */
   private addOnline(query: any) {
     this.toastr.success('La requête à bien été envoyée');
-    this.http.post(query.url, query.params);
+    this.http.post(query.url, query.params).subscribe();
   }
 
   private checkBackOnline() {
